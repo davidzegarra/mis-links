@@ -113,6 +113,7 @@ background:#111a20;
 border-left:3px solid #00ff99;
 border-radius:8px;
 }
+
 button{
 background:#00ff99;
 border:none;
@@ -130,7 +131,14 @@ cursor:pointer;
 <div class="sidebar">
 <h2>SDZO SYSTEM</h2>
 <a href="#">Inicio</a>
-<a href="#">Links</a>
+
+<a href="#" onclick="toggleLinks()">🔗 Links ▼</a>
+
+<div id="linksMenu" style="display:none; padding-left:10px;">
+  <a href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link" target="_blank">📁 Programas 1</a>
+  <a href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link" target="_blank">📁 Programas 2</a>
+</div>
+
 <a href="#">Contenido</a>
 <a href="#">Noticias</a>
 <a href="#">Contacto</a>
@@ -146,15 +154,10 @@ cursor:pointer;
 <p>Noticias reales de ciberseguridad en tiempo real.</p>
 
 <div class="grid">
-
 <a class="card" href="https://wa.me/51999999999" target="_blank">WhatsApp</a>
 <a class="card" href="https://instagram.com" target="_blank">Instagram</a>
 <a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
 <a class="card" href="https://youtube.com" target="_blank">YouTube</a>
-
-<a class="card" href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link">Programas 1</a>
-<a class="card" href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link">Programas 2</a>
-
 </div>
 
 <div class="news">
@@ -166,6 +169,7 @@ cursor:pointer;
 
 <script>
 async function loadNews(){
+try{
 const url = "https://api.rss2json.com/v1/api.json?rss_url=https://www.bleepingcomputer.com/feed/";
 const res = await fetch(url);
 const data = await res.json();
@@ -182,6 +186,15 @@ html += `
 });
 
 document.getElementById("newsBox").innerHTML = html;
+
+}catch(e){
+document.getElementById("newsBox").innerHTML = "Error cargando noticias 🔴";
+}
+}
+
+function toggleLinks(){
+const menu = document.getElementById("linksMenu");
+menu.style.display = menu.style.display === "none" ? "block" : "none";
 }
 
 loadNews();
