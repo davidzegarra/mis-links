@@ -9,10 +9,28 @@
 body{
 margin:0;
 font-family:Arial;
-background:#05070a;
 color:#00ff99;
 display:flex;
 min-height:100vh;
+background:black;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
+radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
+animation:move 10s infinite alternate;
+z-index:-1;
+}
+
+@keyframes move{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
 }
 
 .sidebar{
@@ -70,6 +88,9 @@ padding:15px;
 border-radius:12px;
 border:1px solid #00ff8840;
 transition:0.3s;
+text-decoration:none;
+color:#00ff99;
+text-align:center;
 }
 
 .card:hover{
@@ -92,7 +113,6 @@ background:#111a20;
 border-left:3px solid #00ff99;
 border-radius:8px;
 }
-
 button{
 background:#00ff99;
 border:none;
@@ -102,17 +122,18 @@ border-radius:8px;
 cursor:pointer;
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="sidebar">
 <h2>SDZO SYSTEM</h2>
-<a href="#">🏠 Inicio</a>
-<a href="#">🔗 Links</a>
-<a href="#">🧠 Contenido</a>
-<a href="#">🛡 Seguridad</a>
-<a href="#">📡 Noticias</a>
+<a href="#">Inicio</a>
+<a href="#">Links</a>
+<a href="#">Contenido</a>
+<a href="#">Noticias</a>
+<a href="#">Contacto</a>
 </div>
 
 <div class="main">
@@ -125,12 +146,15 @@ cursor:pointer;
 <p>Noticias reales de ciberseguridad en tiempo real.</p>
 
 <div class="grid">
-<div class="card">💬 WhatsApp</div>
-<div class="card">📸 Instagram</div>
-<div class="card">🎵 TikTok</div>
-<div class="card">▶ YouTube</div>
-<div class="card">🛒 Tienda</div>
-<div class="card">📩 Email</div>
+
+<a class="card" href="https://wa.me/51999999999" target="_blank">WhatsApp</a>
+<a class="card" href="https://instagram.com" target="_blank">Instagram</a>
+<a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
+<a class="card" href="https://youtube.com" target="_blank">YouTube</a>
+
+<a class="card" href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link">Programas 1</a>
+<a class="card" href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link">Programas 2</a>
+
 </div>
 
 <div class="news">
@@ -141,10 +165,8 @@ cursor:pointer;
 </div>
 
 <script>
-// 🔥 API REAL DE NOTICIAS
 async function loadNews(){
 const url = "https://api.rss2json.com/v1/api.json?rss_url=https://www.bleepingcomputer.com/feed/";
-
 const res = await fetch(url);
 const data = await res.json();
 
@@ -162,12 +184,8 @@ html += `
 document.getElementById("newsBox").innerHTML = html;
 }
 
-// cargar al inicio
 loadNews();
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
