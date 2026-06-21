@@ -1,3 +1,4 @@
+/* 🌐 ESTILO GENERAL DE LA PÁGINA */
 body{
 margin:0;
 font-family:Arial;
@@ -8,6 +9,7 @@ background:black;
 overflow:hidden;
 }
 
+/* 🌌 FONDO ANIMADO TIPO HACKER */
 body::before{
 content:"";
 position:absolute;
@@ -20,11 +22,13 @@ animation:move 10s infinite alternate;
 z-index:-1;
 }
 
+/* 🔄 ANIMACIÓN DEL FONDO */
 @keyframes move{
 from{transform:scale(1);}
 to{transform:scale(1.2);}
 }
 
+/* 📌 SIDEBAR (MENÚ LATERAL) */
 .sidebar{
 width:240px;
 background:#0b1116;
@@ -32,11 +36,13 @@ padding:20px;
 border-right:1px solid #00ff8850;
 }
 
+/* 🧠 TÍTULO DEL SISTEMA */
 .sidebar h2{
 color:#00ff99;
 text-shadow:0 0 10px #00ff99;
 }
 
+/* 🔗 LINKS DEL MENÚ */
 .sidebar a{
 display:block;
 padding:10px;
@@ -47,26 +53,31 @@ border-radius:8px;
 transition:0.3s;
 }
 
+/* ✨ EFECTO HOVER EN LINKS */
 .sidebar a:hover{
 background:#00ff8820;
 color:#00ff99;
 }
 
+/* 📊 ÁREA PRINCIPAL */
 .main{
 flex:1;
 padding:20px;
 }
 
+/* 🧠 HEADER SUPERIOR */
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
 }
 
+/* ✨ EFECTO NEÓN */
 .glow{
 text-shadow:0 0 10px #00ff99;
 }
 
+/* 🔳 GRID DE BOTONES */
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -74,6 +85,7 @@ gap:15px;
 margin-top:20px;
 }
 
+/* 🔘 BOTONES / CARDS */
 .card{
 background:#0c141a;
 padding:15px;
@@ -85,11 +97,13 @@ color:#00ff99;
 text-align:center;
 }
 
+/* ✨ HOVER BOTONES */
 .card:hover{
 transform:scale(1.05);
 border-color:#00ff99;
 }
 
+/* 📰 CAJA DE NOTICIAS */
 .news{
 margin-top:30px;
 background:#0b1116;
@@ -98,6 +112,7 @@ border-radius:12px;
 border:1px solid #00ff8850;
 }
 
+/* 🎥 BLOQUE DE NOTICIAS */
 .video{
 margin:10px 0;
 padding:10px;
@@ -106,6 +121,13 @@ border-left:3px solid #00ff99;
 border-radius:8px;
 }
 
+/* 🔽 MENÚ OCULTO */
+#linksMenu{
+display:none;
+padding-left:10px;
+}
+
+/* 🔘 BOTÓN */
 button{
 background:#00ff99;
 border:none;
@@ -113,9 +135,4 @@ padding:10px;
 color:#000;
 border-radius:8px;
 cursor:pointer;
-}
-
-#linksMenu{
-display:none;
-padding-left:10px;
 }
