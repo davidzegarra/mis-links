@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MATRIX CLEAN FIX</title>
+<title>MATRIX FIXED</title>
 
 <style>
 body{
@@ -15,8 +15,6 @@ body{
   position:fixed;
   top:0;
   left:0;
-  width:100%;
-  height:100%;
 }
 </style>
 </head>
@@ -27,63 +25,58 @@ body{
 
 <script>
 
-// ===============================
-// 🌧️ MATRIX LIMPIO (SIN MANCHAS)
-// ===============================
-
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const chars = "01";
 const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
+const chars = "01";
 
-// 🌧️ gotas
-let drops = Array(columns).fill(1);
+let columns;
+let drops = [];
 
-// 🧭 mouse
-let mouseX = canvas.width / 2;
-let mouseY = canvas.height / 2;
+// 🧠 FUNCIÓN CRÍTICA (FIX REAL)
+function initMatrix(){
 
-document.addEventListener("mousemove", (e) => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  columns = Math.floor(canvas.width / fontSize);
+
+  drops = Array(columns).fill(1);
+}
+
+// inicializar
+initMatrix();
+
+// si cambia tamaño pantalla
+window.addEventListener("resize", initMatrix);
+
+// mouse (opcional simple)
+let mouseX = 0;
+document.addEventListener("mousemove", e => {
   mouseX = e.clientX;
-  mouseY = e.clientY;
 });
 
-// 🔥 DRAW LIMPIO
 function draw(){
 
-  // ❗ LIMPIEZA TOTAL (NO TRAIL → SIN MANCHAS)
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i=0;i<drops.length;i++){
+  for(let i=0;i<columns;i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    const dx = mouseX - x;
-    const dy = mouseY - y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-
-    // 🎨 COLOR ESTABLE (SIN PARPADEO GLOBAL)
-    let color = "#00ff99"; // verde fijo base
-
-    if(dist < 80){
-      color = "#ffffff"; // blanco SOLO cerca
-    }
+    // blanco cerca del mouse
+    let color = (Math.abs(mouseX - x) < 80) ? "#ffffff" : "#00ff99";
 
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
-    // 🔁 caída normal
     if(y > canvas.height){
       drops[i] = 0;
     }
