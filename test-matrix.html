@@ -2,17 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TEST MATRIX CLEAN</title>
+<title>MATRIX CLEAN FIX</title>
 
 <style>
-/* 🌐 fondo negro */
 body{
   margin:0;
   overflow:hidden;
   background:black;
 }
 
-/* 🌧️ canvas full screen */
 #matrix{
   position:fixed;
   top:0;
@@ -25,26 +23,21 @@ body{
 
 <body>
 
-<!-- 🌧️ MATRIX CANVAS -->
 <canvas id="matrix"></canvas>
 
 <script>
 
 // ===============================
-// 🌧️ MATRIX LIMPIO (SIN EXPLOSIONES)
+// 🌧️ MATRIX LIMPIO (SIN MANCHAS)
 // ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 🎯 tamaño pantalla
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// 🔢 binario
 const chars = "01";
-
-// ⚙️ configuración
 const fontSize = 16;
 const columns = Math.floor(canvas.width / fontSize);
 
@@ -55,17 +48,16 @@ let drops = Array(columns).fill(1);
 let mouseX = canvas.width / 2;
 let mouseY = canvas.height / 2;
 
-// 🎯 detectar mouse
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 });
 
-// 🔥 ANIMACIÓN
+// 🔥 DRAW LIMPIO
 function draw(){
 
-  // 🌫️ rastro suave
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  // ❗ LIMPIEZA TOTAL (NO TRAIL → SIN MANCHAS)
+  ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
@@ -77,36 +69,22 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 📍 distancia al mouse
     const dx = mouseX - x;
     const dy = mouseY - y;
     const dist = Math.sqrt(dx*dx + dy*dy);
 
-    // 🎨 COLOR SUAVE (SIN EXPLOSIONES)
-    let color;
+    // 🎨 COLOR ESTABLE (SIN PARPADEO GLOBAL)
+    let color = "#00ff99"; // verde fijo base
 
     if(dist < 80){
-      color = "#ffffff"; // cerca del mouse
+      color = "#ffffff"; // blanco SOLO cerca
     }
-    else if(dist < 150){
-      color = "#00ff99"; // verde fuerte
-    }
-    else if(dist < 250){
-      color = "#00aa66"; // verde medio
-    }
-    else{
-      color = "#003b2a"; // oscuro
-    }
-
-    // 🔥 glow suave (sin exagerar)
-    ctx.shadowBlur = dist < 150 ? 8 : 0;
-    ctx.shadowColor = "#00ff99";
 
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
-    // 🔁 reinicio lluvia
-    if(y > canvas.height && Math.random() > 0.975){
+    // 🔁 caída normal
+    if(y > canvas.height){
       drops[i] = 0;
     }
 
@@ -114,7 +92,6 @@ function draw(){
   }
 }
 
-// ⚡ velocidad estable
 setInterval(draw, 33);
 
 </script>
