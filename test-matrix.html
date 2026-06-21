@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TEST MATRIX FIX FINAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST MATRIX VISUAL LAB</title>
 
 <style>
 body{
@@ -10,7 +11,15 @@ body{
   background:black;
   overflow:hidden;
 }
-canvas{display:block;}
+
+/* canvas full screen independiente */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
 </style>
 </head>
 
@@ -20,60 +29,85 @@ canvas{display:block;}
 
 <script>
 
+// ===============================
+// 🧪 MATRIX VISUAL LAB (INDEPENDIENTE TOTAL)
+// ===============================
+
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
+// 🔧 configuración visual simple
 const chars = "01";
-const fontSize = 16;
+const fontSize = 20;
 
-let columns;
-let drops = [];
+// 🎯 estado interno del test
+let particles = [];
 
-// 🧠 FIX 1: resize correcto SIEMPRE
-function resize(){
+// ===============================
+// 📐 resize independiente
+// ===============================
+function setup(){
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  columns = Math.floor(canvas.width / fontSize);
+  particles = [];
 
-  // 🔥 IMPORTANTE: columnas alineadas (NO random vertical)
-  drops = new Array(columns).fill(0);
+  // 🔥 generamos partículas aleatorias (NO columnas fijas)
+  for(let i = 0; i < 200; i++){
+
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      speed: 1 + Math.random() * 3,
+      char: chars[Math.floor(Math.random()*chars.length)]
+    });
+  }
 }
 
-// 🧠 FIX 2: lluvia real (no partículas)
+// ===============================
+// 🎨 render visual libre
+// ===============================
 function draw(){
 
-  // 🔥 limpio real (NO rastro acumulado)
-  ctx.fillStyle = "black";
+  // fondo limpio con leve persistencia
+  ctx.fillStyle = "rgba(0,0,0,0.35)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i = 0; i < columns; i++){
+  particles.forEach(p => {
 
-    const text = chars[Math.floor(Math.random()*chars.length)];
-
-    const x = i * fontSize;
-    const y = drops[i] * fontSize;
-
-    // verde fijo estable
-    ctx.fillStyle = "#00ff99";
-
-    ctx.fillText(text, x, y);
-
-    // 🔥 caída continua REAL
-    if(y > canvas.height){
-      drops[i] = 0;
+    // cambio aleatorio de carácter
+    if(Math.random() > 0.95){
+      p.char = chars[Math.floor(Math.random()*chars.length)];
     }
 
-    drops[i]++;
-  }
+    // color dinámico simple
+    ctx.fillStyle = (Math.random() > 0.98)
+      ? "#ffffff"
+      : "#00ff99";
+
+    ctx.fillText(p.char, p.x, p.y);
+
+    // movimiento libre (NO columnas)
+    p.y += p.speed;
+
+    // reset cuando sale
+    if(p.y > canvas.height){
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
+  });
 }
 
-// 🚀 inicialización correcta
-resize();
-window.addEventListener("resize", resize);
+// ===============================
+// 🚀 inicio limpio
+// ===============================
+setup();
+window.addEventListener("resize", setup);
 
+// loop independiente
 setInterval(draw, 33);
 
 </script>
