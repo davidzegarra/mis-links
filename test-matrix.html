@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Matrix Simple Funcional</title>
+<title>MATRIX FINAL ESTABLE</title>
 
 <style>
 body{
@@ -23,45 +23,43 @@ canvas{
 
 <script>
 
-// ===============================
-// 🌧️ MATRIX SIMPLE 100% FUNCIONAL
-// ===============================
-
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 📏 tamaño fijo pantalla
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// 🔥 FIJO (evita errores de resize)
+let w = window.innerWidth;
+let h = window.innerHeight;
+
+canvas.width = w;
+canvas.height = h;
 
 // 🔢 caracteres
 const chars = "01";
-
-// ⚙️ tamaño letra
 const fontSize = 18;
 
-// 🧠 columnas
-const columns = Math.floor(canvas.width / fontSize);
+// 🧠 columnas fijas
+const columns = Math.floor(w / fontSize);
 
-// 🌧️ gotas
-const drops = [];
+// 🌧️ gotas seguras
+const drops = new Array(columns);
 
+// inicializar
 for(let i = 0; i < columns; i++){
-  drops[i] = Math.random() * canvas.height;
+  drops[i] = Math.random() * h;
 }
 
 // 🧭 mouse simple
 let mouseX = 0;
+
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
-// 🔥 animación
+// 🔥 render estable
 function draw(){
 
-  // limpiar pantalla
   ctx.fillStyle = "black";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillRect(0,0,w,h);
 
   ctx.font = fontSize + "px monospace";
 
@@ -72,25 +70,20 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i];
 
-    // 🎨 blanco cerca del mouse, verde normal
-    if(Math.abs(mouseX - x) < 80){
-      ctx.fillStyle = "#ffffff";
-    } else {
-      ctx.fillStyle = "#00ff99";
-    }
+    // 🎨 blanco cerca del mouse
+    ctx.fillStyle = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
 
     ctx.fillText(text, x, y);
 
-    // reinicio caída
-    if(y > canvas.height){
+    // reinicio seguro
+    if(y > h){
       drops[i] = 0;
     }
 
-    drops[i] += 10;
+    drops[i] += 6;
   }
 }
 
-// 🔥 loop estable
 setInterval(draw, 33);
 
 </script>
