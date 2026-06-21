@@ -2,15 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TEST MATRIX LAB</title>
 
 <style>
+/* ================================
+🌐 ESTILO BASE
+================================ */
 body{
   margin:0;
   background:black;
   overflow:hidden;
 }
 
+/* ================================
+🖥️ CANVAS MATRIX
+================================ */
 canvas{
   display:block;
 }
@@ -24,40 +31,54 @@ canvas{
 <script>
 
 // ===============================
-// 🧪 MATRIX LAB LIMPIO (BASE REAL)
+// 🧪 MATRIX LAB FINAL ESTABLE
 // ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 📏 tamaño seguro
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// 🔢 binario
+// 🔢 caracteres binarios
 const chars = "01";
 
-// ⚙️ configuración base
+// 📏 tamaño de letra
 const fontSize = 18;
 
-// 🧠 columnas fijas
-const columns = Math.floor(canvas.width / fontSize);
+// 📊 variables dinámicas
+let columns;
+let drops = [];
 
-// 🌧️ gotas simples (SIN COMPLEJIDAD)
-const drops = new Array(columns).fill(0);
-
-// 🧭 mouse simple
+// 🧭 mouse tracking (efecto simple)
 let mouseX = 0;
 
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
-// 🔥 render base estable
+// ================================
+// 🔧 INICIALIZAR MATRIX
+// ================================
+function initMatrix(){
+
+  // 📐 ajustar tamaño real del canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // 📊 calcular columnas según ancho real
+  columns = Math.floor(canvas.width / fontSize);
+
+  // 🌧️ generar gotas en posiciones aleatorias (evita línea horizontal)
+  drops = new Array(columns).fill(0).map(() =>
+    Math.random() * (canvas.height / fontSize)
+  );
+}
+
+// ================================
+// 🎨 DIBUJAR MATRIX
+// ================================
 function draw(){
 
-  // fondo limpio (sin manchas)
-  ctx.fillStyle = "black";
+  // 🧼 limpiar pantalla (con leve rastro)
+  ctx.fillStyle = "rgba(0,0,0,1)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
@@ -69,14 +90,14 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🎨 SOLO EFECTO SIMPLE (NO RIESGO)
+    // 🎯 efecto simple mouse
     ctx.fillStyle = (Math.abs(mouseX - x) < 100)
       ? "#ffffff"
       : "#00ff99";
 
     ctx.fillText(text, x, y);
 
-    // reinicio simple
+    // 🔁 reinicio cuando llega abajo
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -85,7 +106,13 @@ function draw(){
   }
 }
 
-// 🔁 loop estable
+// ================================
+// 🚀 ARRANQUE SEGURO
+// ================================
+initMatrix();
+window.addEventListener("resize", initMatrix);
+
+// ⚡ loop de animación
 setInterval(draw, 33);
 
 </script>
