@@ -1,92 +1,49 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>MATRIX FINAL ESTABLE</title>
-
-<style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-}
-
-canvas{
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 🔥 FIJO (evita errores de resize)
-let w = window.innerWidth;
-let h = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-canvas.width = w;
-canvas.height = h;
-
-// 🔢 caracteres
 const chars = "01";
-const fontSize = 18;
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
 
-// 🧠 columnas fijas
-const columns = Math.floor(w / fontSize);
+let drops = Array(columns).fill(0);
 
-// 🌧️ gotas seguras
-const drops = new Array(columns);
-
-// inicializar
-for(let i = 0; i < columns; i++){
-  drops[i] = Math.random() * h;
-}
-
-// 🧭 mouse simple
 let mouseX = 0;
 
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
-// 🔥 render estable
 function draw(){
 
   ctx.fillStyle = "black";
-  ctx.fillRect(0,0,w,h);
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i = 0; i < columns; i++){
+  for(let i=0;i<columns;i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
-    const y = drops[i];
+    const y = drops[i] * fontSize;
 
-    // 🎨 blanco cerca del mouse
     ctx.fillStyle = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
 
     ctx.fillText(text, x, y);
 
-    // reinicio seguro
-    if(y > h){
+    if(y > canvas.height){
       drops[i] = 0;
     }
 
-    drops[i] += 6;
+    drops[i]++;
   }
 }
 
 setInterval(draw, 33);
 
 </script>
-
-</body>
-</html>
