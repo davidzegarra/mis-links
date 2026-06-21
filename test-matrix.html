@@ -1,85 +1,53 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>MATRIX ULTRA FIX</title>
-
-<style>
-body{
-  margin:0;
-  overflow:hidden;
-  background:black;
-}
-
-canvas{
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-const fontSize = 16;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 const chars = "01";
+const fontSize = 16;
 
-let columns;
-let drops = [];
+// 🧠 columnas FIJAS (CLAVE DEL ARREGLO)
+const columns = Math.floor(canvas.width / fontSize);
 
-// 🧠 FIX REAL: recalcular TODO correctamente
-function setup(){
+// 🌧️ cada columna tiene su caída
+let drops = new Array(columns).fill(0);
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  columns = Math.floor(canvas.width / fontSize);
-
-  drops = new Array(columns);
-
-  for(let i=0;i<columns;i++){
-    drops[i] = Math.random() * canvas.height / fontSize;
-  }
-}
-
-// inicializar
-setup();
-window.addEventListener("resize", setup);
-
-// mouse (simple)
+// 🧭 mouse
 let mouseX = 0;
-document.addEventListener("mousemove", e => {
+
+document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
 });
 
 function draw(){
 
-  // limpiar pantalla
+  // fondo limpio (sin manchas)
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i=0;i<columns;i++){
+  for(let i = 0; i < columns; i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
+    // 🚨 X FIJO POR COLUMNA (ESTO TE ARREGLA TODO)
     const x = i * fontSize;
+
+    // Y cae por columna
     const y = drops[i] * fontSize;
 
     // color estable + blanco cerca mouse
-    let color = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
+    let color = (Math.abs(mouseX - x) < 80) ? "#ffffff" : "#00ff99";
 
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
-    // reinicio
-    if(y > canvas.height && Math.random() > 0.98){
+    // reinicio caída
+    if(y > canvas.height){
       drops[i] = 0;
     }
 
@@ -87,15 +55,6 @@ function draw(){
   }
 }
 
-// 🔥 LOOP REAL (NO FALLA COMO setInterval SIMPLE)
-function loop(){
-  draw();
-  requestAnimationFrame(loop);
-}
-
-loop();
+setInterval(draw, 33);
 
 </script>
-
-</body>
-</html>
