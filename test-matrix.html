@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEST MATRIX VISUAL LAB</title>
+<title>MATRIX CLASSIC TEST</title>
 
 <style>
 body{
@@ -12,13 +12,8 @@ body{
   overflow:hidden;
 }
 
-/* canvas full screen independiente */
 canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  display:block;
 }
 </style>
 </head>
@@ -29,85 +24,54 @@ canvas{
 
 <script>
 
-// ===============================
-// 🧪 MATRIX VISUAL LAB (INDEPENDIENTE TOTAL)
-// ===============================
-
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 🔧 configuración visual simple
 const chars = "01";
-const fontSize = 20;
+const fontSize = 16;
 
-// 🎯 estado interno del test
-let particles = [];
+let columns;
+let drops = [];
 
-// ===============================
-// 📐 resize independiente
-// ===============================
-function setup(){
+function init(){
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  particles = [];
+  columns = Math.floor(canvas.width / fontSize);
 
-  // 🔥 generamos partículas aleatorias (NO columnas fijas)
-  for(let i = 0; i < 200; i++){
-
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      speed: 1 + Math.random() * 3,
-      char: chars[Math.floor(Math.random()*chars.length)]
-    });
-  }
+  drops = new Array(columns).fill(0);
 }
 
-// ===============================
-// 🎨 render visual libre
-// ===============================
 function draw(){
 
-  // fondo limpio con leve persistencia
-  ctx.fillStyle = "rgba(0,0,0,0.35)";
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  particles.forEach(p => {
+  for(let i = 0; i < columns; i++){
 
-    // cambio aleatorio de carácter
-    if(Math.random() > 0.95){
-      p.char = chars[Math.floor(Math.random()*chars.length)];
+    const text = chars[Math.floor(Math.random()*chars.length)];
+
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
+
+    ctx.fillStyle = "#00ff99";
+
+    ctx.fillText(text, x, y);
+
+    if(y > canvas.height){
+      drops[i] = 0;
     }
 
-    // color dinámico simple
-    ctx.fillStyle = (Math.random() > 0.98)
-      ? "#ffffff"
-      : "#00ff99";
-
-    ctx.fillText(p.char, p.x, p.y);
-
-    // movimiento libre (NO columnas)
-    p.y += p.speed;
-
-    // reset cuando sale
-    if(p.y > canvas.height){
-      p.y = 0;
-      p.x = Math.random() * canvas.width;
-    }
-  });
+    drops[i]++;
+  }
 }
 
-// ===============================
-// 🚀 inicio limpio
-// ===============================
-setup();
-window.addEventListener("resize", setup);
+init();
+window.addEventListener("resize", init);
 
-// loop independiente
 setInterval(draw, 33);
 
 </script>
