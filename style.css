@@ -1,205 +1,213 @@
-/* 🌐 ESTILO GENERAL DE LA PÁGINA */
+
+/* ================================
+🌐 ESTILO GENERAL DEL SISTEMA
+================================ */
 body{
-margin:0;
-font-family:Arial;
-color:#00ff99;
-display:flex;
-min-height:100vh;
-background:black;
-overflow:hidden;
+  margin:0;
+  font-family:Arial;
+  color:#00ff99;
+  display:flex;
+  min-height:100vh;
+  background:black;
+  overflow:hidden;
 }
 
-/* 🌌 FONDO ANIMADO TIPO HACKER */
+/* ================================
+🌌 FONDO ANIMADO (CAPA MÁS ATRÁS)
+👉 decorativo, no interfiere con UI
+================================ */
 body::before{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
-radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
-animation:move 10s infinite alternate;
-z-index:-1;
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:
+    radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
+    radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
+  animation: move 15s ease-in-out infinite alternate;
+  z-index:-3;
+  pointer-events:none;
 }
 
-/* 🔄 ANIMACIÓN DEL FONDO */
+/* ================================
+🌑 OSCURECIMIENTO GLOBAL
+👉 mejora contraste del texto
+================================ */
+body::after{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.55);
+  z-index:-2;
+  pointer-events:none;
+}
+
+/* ================================
+🔄 ANIMACIÓN DEL FONDO
+================================ */
 @keyframes move{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
 }
 
-/* 📌 SIDEBAR (MENÚ LATERAL) */
+/* ================================
+📌 SIDEBAR (MENÚ LATERAL)
+================================ */
 .sidebar{
-width:240px;
-background:#0b1116;
-padding:20px;
-border-right:1px solid #00ff8850;
+  width:240px;
+  background:#0b1116;
+  padding:20px;
+  border-right:1px solid #00ff8850;
+  position:relative;
+  z-index:2;
 }
 
 /* 🧠 TÍTULO DEL SISTEMA */
 .sidebar h2{
-color:#00ff99;
-text-shadow:0 0 10px #00ff99;
+  color:#00ff99;
+  text-shadow:0 0 10px #00ff99;
 }
 
-/* 🔗 LINKS DEL MENÚ */
+/* 🔗 LINKS */
 .sidebar a{
-display:block;
-padding:10px;
-margin:6px 0;
-color:#aaa;
-text-decoration:none;
-border-radius:8px;
-transition:0.3s;
+  display:block;
+  padding:10px;
+  margin:6px 0;
+  color:#aaa;
+  text-decoration:none;
+  border-radius:8px;
+  transition:0.3s;
 }
 
-/* ✨ EFECTO HOVER EN LINKS */
 .sidebar a:hover{
-background:#00ff8820;
-color:#00ff99;
+  background:#00ff8820;
+  color:#00ff99;
 }
 
-/* 📊 ÁREA PRINCIPAL */
+/* ================================
+📊 CONTENIDO PRINCIPAL
+================================ */
 .main{
-flex:1;
-padding:20px;
+  flex:1;
+  padding:20px;
+  position:relative;
+  z-index:2;
 }
 
-/* 🧠 HEADER SUPERIOR */
+/* ================================
+🧠 HEADER SUPERIOR
+================================ */
 .header{
-display:flex;
-justify-content:space-between;
-align-items:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 /* ✨ EFECTO NEÓN */
 .glow{
-text-shadow:0 0 10px #00ff99;
+  text-shadow:0 0 10px #00ff99;
 }
 
-/* 🔳 GRID DE BOTONES */
+/* ================================
+🔳 GRID DE BOTONES
+================================ */
 .grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
 }
 
-/* 🔘 BOTONES / CARDS */
+/* ================================
+🔘 CARDS
+================================ */
 .card{
-background:#0c141a;
-padding:15px;
-border-radius:12px;
-border:1px solid #00ff8840;
-transition:0.3s;
-text-decoration:none;
-color:#00ff99;
-text-align:center;
+  background:#0c141a;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid #00ff8840;
+  transition:0.3s;
+  text-decoration:none;
+  color:#00ff99;
+  text-align:center;
 }
 
-/* ✨ HOVER BOTONES */
 .card:hover{
-transform:scale(1.05);
-border-color:#00ff99;
+  transform:scale(1.05);
+  border-color:#00ff99;
 }
 
-/* 📰 CAJA DE NOTICIAS */
+/* ================================
+📰 NOTICIAS
+================================ */
 .news{
-margin-top:30px;
-background:#0b1116;
-padding:15px;
-border-radius:12px;
-border:1px solid #00ff8850;
+  margin-top:30px;
+  background:#0b1116;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid #00ff8850;
 }
 
-/* 🎥 BLOQUE DE NOTICIAS */
+/* ================================
+🎥 BLOQUE DE NOTICIAS
+================================ */
 .video{
-margin:10px 0;
-padding:10px;
-background:#111a20;
-border-left:3px solid #00ff99;
-border-radius:8px;
+  margin:10px 0;
+  padding:10px;
+  background:#111a20;
+  border-left:3px solid #00ff99;
+  border-radius:8px;
 }
 
-/* 🔽 MENÚ OCULTO */
+/* ================================
+🔽 MENÚ OCULTO
+================================ */
 #linksMenu{
-display:none;
-padding-left:10px;
+  display:none;
+  padding-left:10px;
 }
 
-/* 🔘 BOTÓN */
+/* ================================
+🔘 BOTÓN
+================================ */
 button{
-background:#00ff99;
-border:none;
-padding:10px;
-color:#000;
-border-radius:8px;
-cursor:pointer;
+  background:#00ff99;
+  border:none;
+  padding:10px;
+  color:#000;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* 🎥 VIDEO DE FONDO */
-#bgVideo{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
-pointer-events:none;
-}
-
-/* 🌑 CAPA OSCURA PARA LEER TEXTO */
-body::after{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-z-index:-1;
-}
-
-#bgVideo{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 80%;
-  height: auto;
-
-  border-radius: 20px;
-  object-fit: cover;
-
-  z-index: -2;
-  opacity: 0.9;
-}
-/* 🎥 VIDEO PEQUEÑO EN EL SIDEBAR */
+/* ================================
+🎥 VIDEO SIDEBAR
+================================ */
 #sidebarVideo{
-  width: 100%;              /* ocupa todo el ancho del sidebar */
-  height: 120px;            /* tamaño pequeño */
-  object-fit: cover;       /* recorta bonito sin deformar */
-  border-radius: 10px;     /* bordes redondeados */
-  margin: 10px 0 20px 0;   /* espacio arriba y abajo */
-  border: 1px solid #00ff8850;
-  box-shadow: 0 0 15px rgba(0,255,136,0.15);
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+  margin:10px 0 20px 0;
+  border:1px solid #00ff8850;
+  box-shadow:0 0 15px rgba(0,255,136,0.15);
 }
 
-/* 🌧️ MATRIX FULL SCREEN HD */
+/* ================================
+🌧️ MATRIX (CAPA MEDIA)
+👉 fondo interactivo principal
+================================ */
 #matrix{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  z-index: -3;
-
-  /* evita blur / mejora nitidez */
-  image-rendering: pixelated;
-  background: black;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+  will-change: transform;
 }
-
-
