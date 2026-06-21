@@ -1,0 +1,118 @@
+<style>
+body{
+margin:0;
+font-family:Arial;
+color:#00ff99;
+display:flex;
+min-height:100vh;
+background:black;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
+radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
+animation:move 10s infinite alternate;
+z-index:-1;
+}
+
+@keyframes move{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
+}
+
+.sidebar{
+width:240px;
+background:#0b1116;
+padding:20px;
+border-right:1px solid #00ff8850;
+}
+
+.sidebar h2{
+color:#00ff99;
+text-shadow:0 0 10px #00ff99;
+}
+
+.sidebar a{
+display:block;
+padding:10px;
+margin:6px 0;
+color:#aaa;
+text-decoration:none;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#00ff8820;
+color:#00ff99;
+}
+
+.main{
+flex:1;
+padding:20px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.glow{
+text-shadow:0 0 10px #00ff99;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.card{
+background:#0c141a;
+padding:15px;
+border-radius:12px;
+border:1px solid #00ff8840;
+transition:0.3s;
+text-decoration:none;
+color:#00ff99;
+text-align:center;
+}
+
+.card:hover{
+transform:scale(1.05);
+border-color:#00ff99;
+}
+
+.news{
+margin-top:30px;
+background:#0b1116;
+padding:15px;
+border-radius:12px;
+border:1px solid #00ff8850;
+}
+
+.video{
+margin:10px 0;
+padding:10px;
+background:#111a20;
+border-left:3px solid #00ff99;
+border-radius:8px;
+}
+
+button{
+background:#00ff99;
+border:none;
+padding:10px;
+color:#000;
+border-radius:8px;
+cursor:pointer;
+}
+</style>
