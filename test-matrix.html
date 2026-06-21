@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MATRIX FIXED</title>
+<title>MATRIX ULTRA FIX</title>
 
 <style>
 body{
@@ -11,10 +11,8 @@ body{
   background:black;
 }
 
-#matrix{
-  position:fixed;
-  top:0;
-  left:0;
+canvas{
+  display:block;
 }
 </style>
 </head>
@@ -34,24 +32,26 @@ const chars = "01";
 let columns;
 let drops = [];
 
-// 🧠 FUNCIÓN CRÍTICA (FIX REAL)
-function initMatrix(){
+// 🧠 FIX REAL: recalcular TODO correctamente
+function setup(){
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
   columns = Math.floor(canvas.width / fontSize);
 
-  drops = Array(columns).fill(1);
+  drops = new Array(columns);
+
+  for(let i=0;i<columns;i++){
+    drops[i] = Math.random() * canvas.height / fontSize;
+  }
 }
 
 // inicializar
-initMatrix();
+setup();
+window.addEventListener("resize", setup);
 
-// si cambia tamaño pantalla
-window.addEventListener("resize", initMatrix);
-
-// mouse (opcional simple)
+// mouse (simple)
 let mouseX = 0;
 document.addEventListener("mousemove", e => {
   mouseX = e.clientX;
@@ -59,6 +59,7 @@ document.addEventListener("mousemove", e => {
 
 function draw(){
 
+  // limpiar pantalla
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -71,21 +72,28 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // blanco cerca del mouse
-    let color = (Math.abs(mouseX - x) < 80) ? "#ffffff" : "#00ff99";
+    // color estable + blanco cerca mouse
+    let color = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
 
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
-    if(y > canvas.height){
+    // reinicio
+    if(y > canvas.height && Math.random() > 0.98){
       drops[i] = 0;
     }
 
-    drops[i]++;
+    drops[i] += 1;
   }
 }
 
-setInterval(draw, 33);
+// 🔥 LOOP REAL (NO FALLA COMO setInterval SIMPLE)
+function loop(){
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
 
 </script>
 
