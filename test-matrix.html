@@ -1,79 +1,77 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>MATRIX SIMPLE</title>
-
-<style>
-body{
-  margin:0;
-  overflow:hidden;
-  background:black;
-}
-
-#matrix{
-  position:fixed;
-  top:0;
-  left:0;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
+// 🌧️ MATRIX INTERACTIVO PRO (RESPONDE AL MOUSE)
 
+// 📌 CANVAS
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 📏 tamaño pantalla
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// 🎯 Ajuste HD (evita pixelado)
+function resize(){
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+}
+resize();
+window.addEventListener("resize", resize);
 
-// 🔢 caracteres
+// 🧠 caracteres binarios
 const chars = "01";
+
+// ⚙️ configuración visual
 const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
+let columns = Math.floor(window.innerWidth / fontSize);
 
 // 🌧️ gotas
 let drops = Array(columns).fill(1);
 
-// 🧭 mouse
-let mouseX = 0;
+// 🧭 posición del mouse
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
 
+// 🎯 detectar mouse
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
+  mouseY = e.clientY;
 });
 
-// 🔥 animación
+// 🔥 función principal
 function draw(){
 
-  // 🌫️ limpio suave
-  ctx.fillStyle = "black";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // 🌫️ fondo con rastro (efecto matrix)
+  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i = 0; i < columns; i++){
+  for(let i = 0; i < drops.length; i++){
 
-    const text = chars[Math.floor(Math.random()*chars.length)];
+    const text = chars[Math.floor(Math.random() * chars.length)];
 
+    // 📍 posición base
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🎨 SOLO CAMBIO SIMPLE (como querías)
-    if(Math.abs(mouseX - x) < 80){
-      ctx.fillStyle = "#ffffff"; // blanco al pasar mouse
-    } else {
-      ctx.fillStyle = "#00ff99"; // verde normal
+    // 🧠 distancia al mouse (efecto interacción)
+    const dx = mouseX - x;
+    const dy = mouseY - y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    // 🔥 efecto de proximidad (brillo dinámico)
+    let alpha = 0.2;
+    let color = "#00ff99";
+
+    if(dist < 120){
+      alpha = 1;
+      color = "#66ffcc";
+    } else if(dist < 250){
+      alpha = 0.5;
     }
 
+    ctx.fillStyle = `rgba(0,255,153,${alpha})`;
     ctx.fillText(text, x, y);
 
-    // 🔁 reinicio caída
-    if(y > canvas.height){
+    // 🔁 reinicio de gotas
+    if(y > canvas.height && Math.random() > 0.975){
       drops[i] = 0;
     }
 
@@ -81,10 +79,6 @@ function draw(){
   }
 }
 
-// ⚡ loop estable
+// ⚡ velocidad de animación
 setInterval(draw, 33);
-
 </script>
-
-</body>
-</html>
