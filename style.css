@@ -186,3 +186,20 @@ z-index:-1;
   border: 1px solid #00ff8850;
   box-shadow: 0 0 15px rgba(0,255,136,0.15);
 }
+
+/* 🌧️ MATRIX FULL SCREEN HD */
+#matrix{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: -3;
+
+  /* evita blur / mejora nitidez */
+  image-rendering: pixelated;
+  background: black;
+}
+
+
