@@ -1,23 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TEST MATRIX ISOLATED</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  background:black;
+}
+
+canvas{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
 <script>
+
+// ===============================
+// 🌧️ MATRIX TEST INDEPENDIENTE
+// (NO TOCA TU PROYECTO REAL)
+// ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// 📏 tamaño seguro
+function setup(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+setup();
 
+window.addEventListener("resize", setup);
+
+// 🔢 binario
 const chars = "01";
 const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
 
+// 🧠 columnas correctas
+let columns = Math.floor(canvas.width / fontSize);
 let drops = Array(columns).fill(0);
 
+// 🧭 mouse
 let mouseX = 0;
 
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
+// 🔥 loop seguro
 function draw(){
 
   ctx.fillStyle = "black";
@@ -32,7 +70,10 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    ctx.fillStyle = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
+    // 🎨 MISMO ESTILO QUE TU PRINCIPAL (simple y seguro)
+    ctx.fillStyle = (Math.abs(mouseX - x) < 90)
+      ? "#ffffff"
+      : "#00ff99";
 
     ctx.fillText(text, x, y);
 
@@ -44,6 +85,10 @@ function draw(){
   }
 }
 
+// 🔥 render estable (igual que tu sistema base)
 setInterval(draw, 33);
 
 </script>
+
+</body>
+</html>
