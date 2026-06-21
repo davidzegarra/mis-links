@@ -1,9 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TEST MATRIX PRO</title>
+
+<style>
+/* 🌐 fondo negro total */
+body{
+  margin:0;
+  overflow:hidden;
+  background:black;
+}
+
+/* 🌧️ canvas full screen */
+#matrix{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌧️ MATRIX CANVAS -->
+<canvas id="matrix"></canvas>
+
 <script>
+
+// =============================
+// 🌧️ MATRIX BINARIO FUNCIONAL
+// =============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 🎯 tamaño correcto (SIN devicePixelRatio para evitar blanco)
+// 🎯 ajustar tamaño pantalla
 function resize(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -11,11 +45,17 @@ function resize(){
 resize();
 window.addEventListener("resize", resize);
 
+// 🔢 caracteres binarios
 const chars = "01";
+
+// ⚙️ configuración
 const fontSize = 16;
 let columns = Math.floor(window.innerWidth / fontSize);
+
+// 🌧️ gotas
 let drops = Array(columns).fill(1);
 
+// 🧭 mouse tracking
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
@@ -24,11 +64,17 @@ document.addEventListener("mousemove", (e) => {
   mouseY = e.clientY;
 });
 
+// =============================
+// 🔥 DIBUJO PRINCIPAL
+// =============================
+
 function draw(){
 
-  // 🌫️ fondo con rastro (IMPORTANTE)
+  // 🌫️ efecto rastro
   ctx.fillStyle = "rgba(0,0,0,0.15)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.font = fontSize + "px monospace";
 
   for(let i=0;i<drops.length;i++){
 
@@ -37,15 +83,15 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
+    // 📍 distancia al mouse
     const dist = Math.abs(mouseX - x);
 
-    // 🎨 color seguro
+    // 🎨 color dinámico simple
     ctx.fillStyle = dist < 150 ? "#66ffcc" : "#00ff99";
-
-    ctx.font = fontSize + "px monospace";
 
     ctx.fillText(text, x, y);
 
+    // 🔁 reinicio de gotas
     if(y > canvas.height && Math.random() > 0.975){
       drops[i] = 0;
     }
@@ -54,6 +100,10 @@ function draw(){
   }
 }
 
+// ⚡ INICIAR ANIMACIÓN (ESTO ES LO QUE TE FALTABA)
 setInterval(draw, 33);
 
 </script>
+
+</body>
+</html>
