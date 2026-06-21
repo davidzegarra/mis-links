@@ -96,7 +96,9 @@ const fontSize = 16;
 let columns = Math.floor(window.innerWidth / fontSize);
 
 // gotas
-let drops = Array(columns).fill(1);
+let drops = new Array(columns).fill(0).map(() => {
+  return Math.random() * (window.innerHeight / fontSize);
+});
 
 function draw(){
   // fondo con rastro suave
