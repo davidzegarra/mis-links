@@ -3,202 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 🧠 Título que aparece en la pestaña del navegador -->
 <title>SDZO Cyber Hub</title>
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-color:#00ff99;
-display:flex;
-min-height:100vh;
-background:black;
-overflow:hidden;
-}
-
-body::before{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
-radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
-animation:move 10s infinite alternate;
-z-index:-1;
-}
-
-@keyframes move{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
-}
-
-.sidebar{
-width:240px;
-background:#0b1116;
-padding:20px;
-border-right:1px solid #00ff8850;
-}
-
-.sidebar h2{
-color:#00ff99;
-text-shadow:0 0 10px #00ff99;
-}
-
-.sidebar a{
-display:block;
-padding:10px;
-margin:6px 0;
-color:#aaa;
-text-decoration:none;
-border-radius:8px;
-transition:0.3s;
-}
-
-.sidebar a:hover{
-background:#00ff8820;
-color:#00ff99;
-}
-
-.main{
-flex:1;
-padding:20px;
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.glow{
-text-shadow:0 0 10px #00ff99;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:20px;
-}
-
-.card{
-background:#0c141a;
-padding:15px;
-border-radius:12px;
-border:1px solid #00ff8840;
-transition:0.3s;
-text-decoration:none;
-color:#00ff99;
-text-align:center;
-}
-
-.card:hover{
-transform:scale(1.05);
-border-color:#00ff99;
-}
-
-.news{
-margin-top:30px;
-background:#0b1116;
-padding:15px;
-border-radius:12px;
-border:1px solid #00ff8850;
-}
-
-.video{
-margin:10px 0;
-padding:10px;
-background:#111a20;
-border-left:3px solid #00ff99;
-border-radius:8px;
-}
-
-button{
-background:#00ff99;
-border:none;
-padding:10px;
-color:#000;
-border-radius:8px;
-cursor:pointer;
-}
-</style>
-
+<!-- 🎨 Conectamos el archivo de diseño (CSS externo) -->
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- 📌 SIDEBAR: menú lateral de la web -->
 <div class="sidebar">
+
+<!-- 🏷️ Nombre del sistema -->
 <h2>SDZO SYSTEM</h2>
+
+<!-- 🏠 Botón de inicio -->
 <a href="#">Inicio</a>
 
+<!-- 🔽 Botón que abre/cierra links -->
 <a href="#" onclick="toggleLinks()">🔗 Links ▼</a>
 
-<div id="linksMenu" style="display:none; padding-left:10px;">
-  <a href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link" target="_blank">📁 Programas 1</a>
-  <a href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link" target="_blank">📁 Programas 2</a>
+<!-- 📁 Submenú de links (Drive) -->
+<div id="linksMenu">
+  <a href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link" target="_blank">
+  📁 Programas 1
+  </a>
+
+  <a href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link" target="_blank">
+  📁 Programas 2
+  </a>
 </div>
 
+<!-- 📄 Más opciones del menú -->
 <a href="#">Contenido</a>
 <a href="#">Noticias</a>
 <a href="#">Contacto</a>
 </div>
 
+<!-- 📊 CONTENIDO PRINCIPAL -->
 <div class="main">
 
+<!-- 🧠 Encabezado -->
 <div class="header">
-<h1 class="glow">DASHBOARD CYBER 2026</h1>
+
+<h1 class="glow">
+DASHBOARD CYBER 2026
+</h1>
+
+<!-- 🔄 Botón para actualizar noticias -->
 <button onclick="loadNews()">Actualizar noticias</button>
+
 </div>
 
+<!-- 📝 Texto descriptivo -->
 <p>Noticias reales de ciberseguridad en tiempo real.</p>
 
+<!-- 🔗 CUADROS DE LINKS RÁPIDOS -->
 <div class="grid">
+
 <a class="card" href="https://wa.me/51999999999" target="_blank">WhatsApp</a>
 <a class="card" href="https://instagram.com" target="_blank">Instagram</a>
 <a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
 <a class="card" href="https://youtube.com" target="_blank">YouTube</a>
+
 </div>
 
+<!-- 🧠 SECCIÓN DE NOTICIAS -->
 <div class="news">
+
 <h3>🧠 Noticias de Ciberseguridad (LIVE)</h3>
+
+<!-- 📦 aquí se cargan noticias automáticamente -->
 <div id="newsBox">Cargando noticias...</div>
-</div>
 
 </div>
 
-<script>
-async function loadNews(){
-try{
-const url = "https://api.rss2json.com/v1/api.json?rss_url=https://www.bleepingcomputer.com/feed/";
-const res = await fetch(url);
-const data = await res.json();
-
-let html = "";
-
-data.items.slice(0,5).forEach(item=>{
-html += `
-<div class="video">
-🔥 ${item.title}<br>
-<a href="${item.link}" target="_blank">Leer más</a>
 </div>
-`;
-});
 
-document.getElementById("newsBox").innerHTML = html;
-
-}catch(e){
-document.getElementById("newsBox").innerHTML = "Error cargando noticias 🔴";
-}
-}
-
-function toggleLinks(){
-const menu = document.getElementById("linksMenu");
-menu.style.display = menu.style.display === "none" ? "block" : "none";
-}
-
-loadNews();
-</script>
+<!-- ⚙️ conectamos el archivo JS -->
+<script src="app.js"></script>
 
 </body>
 </html>
