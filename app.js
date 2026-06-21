@@ -71,3 +71,53 @@ menu.style.display = "block";
 
 // 🚀 Al cargar la página ejecuta las noticias automáticamente
 loadNews();
+
+// 🌧️ MATRIX BINARIO HD SIN PERDER CALIDAD
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+// 🎯 Ajuste a resolución real de pantalla (EVITA BORROSIDAD)
+function resize(){
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+}
+resize();
+window.addEventListener("resize", resize);
+
+// 🔢 caracteres binarios
+const chars = "01";
+
+// 📏 tamaño de letra
+const fontSize = 16;
+
+// columnas
+let columns = Math.floor(window.innerWidth / fontSize);
+
+// gotas
+let drops = Array(columns).fill(1);
+
+function draw(){
+  // fondo con rastro suave
+  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#00ff99";
+  ctx.font = fontSize + "px monospace";
+
+  for(let i = 0; i < drops.length; i++){
+
+    const text = chars[Math.floor(Math.random() * chars.length)];
+
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+    if(drops[i] * fontSize > window.innerHeight && Math.random() > 0.975){
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 33);
