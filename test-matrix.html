@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TEST MATRIX ISOLATED</title>
+<title>MATRIX DEBUG FIX</title>
 
 <style>
 body{
   margin:0;
-  overflow:hidden;
   background:black;
+  overflow:hidden;
 }
 
 canvas{
@@ -23,70 +23,69 @@ canvas{
 
 <script>
 
-// ===============================
-// 🌧️ MATRIX TEST INDEPENDIENTE
-// (NO TOCA TU PROYECTO REAL)
-// ===============================
+window.onload = function(){
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+  console.log("🚀 Matrix iniciando...");
 
-// 📏 tamaño seguro
-function setup(){
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+
+  // 📏 tamaño correcto (CRÍTICO)
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-}
-setup();
 
-window.addEventListener("resize", setup);
+  const chars = "01";
+  const fontSize = 16;
 
-// 🔢 binario
-const chars = "01";
-const fontSize = 16;
+  let columns = Math.floor(canvas.width / fontSize);
 
-// 🧠 columnas correctas
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(0);
+  console.log("📊 columnas:", columns);
 
-// 🧭 mouse
-let mouseX = 0;
+  // 🧠 inicializar bien drops
+  let drops = [];
 
-document.addEventListener("mousemove", e=>{
-  mouseX = e.clientX;
-});
-
-// 🔥 loop seguro
-function draw(){
-
-  ctx.fillStyle = "black";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.font = fontSize + "px monospace";
-
-  for(let i=0;i<columns;i++){
-
-    const text = chars[Math.floor(Math.random()*chars.length)];
-
-    const x = i * fontSize;
-    const y = drops[i] * fontSize;
-
-    // 🎨 MISMO ESTILO QUE TU PRINCIPAL (simple y seguro)
-    ctx.fillStyle = (Math.abs(mouseX - x) < 90)
-      ? "#ffffff"
-      : "#00ff99";
-
-    ctx.fillText(text, x, y);
-
-    if(y > canvas.height){
-      drops[i] = 0;
-    }
-
-    drops[i]++;
+  for(let i = 0; i < columns; i++){
+    drops[i] = Math.random() * canvas.height / fontSize;
   }
-}
 
-// 🔥 render estable (igual que tu sistema base)
-setInterval(draw, 33);
+  let mouseX = 0;
+
+  document.addEventListener("mousemove", e=>{
+    mouseX = e.clientX;
+  });
+
+  function draw(){
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.font = fontSize + "px monospace";
+
+    for(let i = 0; i < columns; i++){
+
+      const text = chars[Math.floor(Math.random()*chars.length)];
+
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      // 🎨 efecto seguro
+      ctx.fillStyle = (Math.abs(mouseX - x) < 100)
+        ? "#ffffff"
+        : "#00ff99";
+
+      ctx.fillText(text, x, y);
+
+      if(y > canvas.height){
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
+
+};
 
 </script>
 
