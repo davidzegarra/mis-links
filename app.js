@@ -79,10 +79,10 @@ const ctx = canvas.getContext("2d");
 
 // 🎯 Ajuste a resolución real de pantalla (EVITA BORROSIDAD)
 function resize(){
-  canvas.width = window.innerWidth * devicePixelRatio;
-  canvas.height = window.innerHeight * devicePixelRatio;
-  ctx.scale(devicePixelRatio, devicePixelRatio);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
+
 resize();
 window.addEventListener("resize", resize);
 
