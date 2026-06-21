@@ -73,39 +73,33 @@ const fontSize = 16;
 let columns;
 let drops = [];
 
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-function setupMatrix(){
-
-  columns = Math.floor(canvas.width / fontSize);
-
-  // 🔥 CLAVE: esperar canvas REAL ya definido
-  drops = Array(columns).fill(0).map(() =>
-    Math.random() * (canvas.height / fontSize)
-  );
-}
-
-function init(){
-
-  resize();
-  setupMatrix();
-
-}
-
-init();
-window.addEventListener("resize", init);
-
 let mouseX = 0;
+
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
+function initMatrix(){
+
+  // 🔥 IMPORTANTE: forzar render primero
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // 🔥 esperar un frame REAL del navegador
+  requestAnimationFrame(() => {
+
+    columns = Math.floor(canvas.width / fontSize);
+
+    drops = new Array(columns).fill(0).map(() =>
+      Math.random() * (canvas.height / fontSize)
+    );
+
+  });
+}
+
 function draw(){
 
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
@@ -130,5 +124,9 @@ function draw(){
     drops[i]++;
   }
 }
+
+// 🚀 inicialización segura
+initMatrix();
+window.addEventListener("resize", initMatrix);
 
 setInterval(draw, 33);
