@@ -1,41 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TEST MATRIX LAB</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  overflow:hidden;
+}
+
+canvas{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
 <script>
+
+// ===============================
+// 🧪 MATRIX LAB LIMPIO (BASE REAL)
+// ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
+// 📏 tamaño seguro
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// 🔢 binario
 const chars = "01";
-const fontSize = 16;
 
-let columns;
-let drops = [];
+// ⚙️ configuración base
+const fontSize = 18;
 
+// 🧠 columnas fijas
+const columns = Math.floor(canvas.width / fontSize);
+
+// 🌧️ gotas simples (SIN COMPLEJIDAD)
+const drops = new Array(columns).fill(0);
+
+// 🧭 mouse simple
 let mouseX = 0;
 
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
-// 🧠 FIX CRÍTICO: recalcular bien SIEMPRE
-function resize(){
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  columns = Math.floor(canvas.width / fontSize);
-
-  // 🔥 IMPORTANTE: distribuir en toda la altura
-  drops = new Array(columns);
-
-  for(let i = 0; i < columns; i++){
-    drops[i] = Math.random() * (canvas.height / fontSize);
-  }
-}
-
-resize();
-window.addEventListener("resize", resize);
-
+// 🔥 render base estable
 function draw(){
 
+  // fondo limpio (sin manchas)
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -48,14 +69,14 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🎨 blanco cerca del mouse
+    // 🎨 SOLO EFECTO SIMPLE (NO RIESGO)
     ctx.fillStyle = (Math.abs(mouseX - x) < 100)
       ? "#ffffff"
       : "#00ff99";
 
     ctx.fillText(text, x, y);
 
-    // 🔁 reset
+    // reinicio simple
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -64,6 +85,10 @@ function draw(){
   }
 }
 
+// 🔁 loop estable
 setInterval(draw, 33);
 
 </script>
+
+</body>
+</html>
