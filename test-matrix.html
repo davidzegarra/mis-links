@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATRIX CLASSIC TEST</title>
+<title>Matrix Mouse Interactive</title>
 
 <style>
 body{
@@ -24,6 +24,10 @@ canvas{
 
 <script>
 
+// ===============================
+// 🌧️ MATRIX CLÁSICO + INTERACTIVO
+// ===============================
+
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -33,6 +37,18 @@ const fontSize = 16;
 let columns;
 let drops = [];
 
+// 🧭 mouse tracking
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener("mousemove", e=>{
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// ===============================
+// 🔧 INICIALIZAR MATRIX
+// ===============================
 function init(){
 
   canvas.width = window.innerWidth;
@@ -40,11 +56,16 @@ function init(){
 
   columns = Math.floor(canvas.width / fontSize);
 
+  // 🔥 lluvia continua estable (NO random caos)
   drops = new Array(columns).fill(0);
 }
 
+// ===============================
+// 🎨 DIBUJAR MATRIX
+// ===============================
 function draw(){
 
+  // fondo con leve rastro (efecto real Matrix)
   ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -57,10 +78,21 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    ctx.fillStyle = "#00ff99";
+    // 🎯 distancia mouse
+    const dx = mouseX - x;
+    const dy = mouseY - y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+
+    // 🎨 color interactivo
+    if(dist < 80){
+      ctx.fillStyle = "#ffffff"; // blanco al pasar mouse
+    }else{
+      ctx.fillStyle = "#00ff99"; // verde Matrix
+    }
 
     ctx.fillText(text, x, y);
 
+    // 🔁 reinicio lluvia
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -69,6 +101,9 @@ function draw(){
   }
 }
 
+// ===============================
+// 🚀 START
+// ===============================
 init();
 window.addEventListener("resize", init);
 
