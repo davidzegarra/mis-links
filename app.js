@@ -73,61 +73,56 @@ const fontSize = 16;
 let columns;
 let drops = [];
 
-//
-// 📏 AJUSTE DE PANTALLA
-//
 function resize(){
-
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 
-//
-// 🧠 INICIALIZAR MATRIX
-//
 function setupMatrix(){
 
   columns = Math.floor(canvas.width / fontSize);
 
-  // 🌧️ distribución aleatoria inicial (evita línea horizontal)
-  drops = new Array(columns).fill(0).map(() =>
+  // 🔥 CLAVE: esperar canvas REAL ya definido
+  drops = Array(columns).fill(0).map(() =>
     Math.random() * (canvas.height / fontSize)
   );
 }
 
-//
-// 🔥 INICIAR TODO
-//
-resize();
-setupMatrix();
+function init(){
 
-window.addEventListener("resize", () => {
   resize();
   setupMatrix();
+
+}
+
+init();
+window.addEventListener("resize", init);
+
+let mouseX = 0;
+document.addEventListener("mousemove", e=>{
+  mouseX = e.clientX;
 });
 
-//
-// 🎨 DIBUJO MATRIX
-//
 function draw(){
 
-  // fondo con rastro suave
-  ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = "#00ff99";
   ctx.font = fontSize + "px monospace";
 
   for(let i = 0; i < columns; i++){
 
-    const text = chars[Math.floor(Math.random() * chars.length)];
+    const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
+    ctx.fillStyle = (Math.abs(mouseX - x) < 100)
+      ? "#ffffff"
+      : "#00ff99";
+
     ctx.fillText(text, x, y);
 
-    // reinicio de caída
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -136,7 +131,4 @@ function draw(){
   }
 }
 
-//
-// ⚡ LOOP PRINCIPAL
-//
 setInterval(draw, 33);
