@@ -1,36 +1,60 @@
-<script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>MATRIX DEBUG</title>
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-const fontSize = 16;
-const chars = "01";
-
-let columns;
-let drops = [];
-
-// 🧠 FIX IMPORTANTE: resize seguro PC + móvil
-function init(){
-
-  // 🔥 evita pantalla blanca en PC
-  canvas.style.width = "100vw";
-  canvas.style.height = "100vh";
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  columns = Math.floor(canvas.width / fontSize);
-
-  drops = new Array(columns).fill(0);
+<style>
+body{
+  margin:0;
+  background:black;
+  overflow:hidden;
 }
 
-// inicializar
-init();
+#matrix{
+  position:fixed;
+  top:0;
+  left:0;
+}
+</style>
+</head>
 
-// si cambia tamaño (PC)
-window.addEventListener("resize", init);
+<body>
 
-// 🧭 mouse opcional
+<canvas id="matrix"></canvas>
+
+<script>
+
+console.log("🚀 Script iniciado");
+
+// 🧠 verificar canvas
+const canvas = document.getElementById("matrix");
+
+if(!canvas){
+  alert("❌ ERROR: Canvas no encontrado");
+}
+
+const ctx = canvas.getContext("2d");
+
+if(!ctx){
+  alert("❌ ERROR: Contexto no disponible");
+}
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+
+window.addEventListener("resize", resize);
+
+const chars = "01";
+const fontSize = 16;
+
+let columns = Math.floor(canvas.width / fontSize);
+let drops = Array(columns).fill(0);
+
+// 🧭 mouse test
 let mouseX = 0;
 
 document.addEventListener("mousemove", e => {
@@ -39,26 +63,27 @@ document.addEventListener("mousemove", e => {
 
 function draw(){
 
-  // 🌫️ limpio estable (NO blur raro)
-  ctx.fillStyle = "black";
+  // 🔥 SI ESTO NO SE VE → YA SABEMOS QUE FALLA
+  ctx.fillStyle = "rgba(0,0,0,0.2)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i = 0; i < columns; i++){
+  for(let i=0;i<columns;i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🎨 color estable
-    let color = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
+    if(Math.abs(mouseX - x) < 80){
+      ctx.fillStyle = "#ffffff";
+    } else {
+      ctx.fillStyle = "#00ff99";
+    }
 
-    ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
-    // reinicio seguro
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -67,12 +92,9 @@ function draw(){
   }
 }
 
-// 🚀 loop estable (MEJOR QUE setInterval)
-function loop(){
-  draw();
-  requestAnimationFrame(loop);
-}
-
-loop();
+setInterval(draw, 33);
 
 </script>
+
+</body>
+</html>
