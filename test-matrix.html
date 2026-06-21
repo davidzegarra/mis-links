@@ -1,72 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>MATRIX NUEVO INICIO</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  background:black;
+}
+
+/* 🎥 canvas ocupa toda la pantalla */
+canvas{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
 <script>
+
+// ===============================
+// 🌧️ MATRIX DESDE CERO (ESTABLE)
+// ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// 📏 ajuste de pantalla
+function fit(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+fit();
+window.addEventListener("resize", fit);
 
+// 🔢 caracteres binarios
 const chars = "01";
-const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
 
-// 🌧️ gotas
-let drops = Array(columns).fill(1);
+// ⚙️ tamaño de letra
+const fontSize = 18;
 
-// 🧭 mouse real
-let mouseX = canvas.width / 2;
-let mouseY = canvas.height / 2;
+// 🧠 columnas
+let columns;
+let drops;
 
-document.addEventListener("mousemove", (e) => {
+// 🧭 inicializar sistema
+function init(){
+  columns = Math.floor(canvas.width / fontSize);
+  drops = new Array(columns).fill(0);
+}
+init();
+
+// mouse simple
+let mouseX = 0;
+document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
-  mouseY = e.clientY;
 });
 
+// 🔥 dibujo principal
 function draw(){
 
-  ctx.fillStyle = "rgba(0,0,0,0.12)";
+  // fondo limpio (sin manchas raras)
+  ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i=0;i<drops.length;i++){
+  for(let i=0;i<columns;i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🔥 DISTANCIA REAL AL MOUSE
-    const dx = mouseX - x;
-    const dy = mouseY - y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-
-    // 💥 EFECTO REAL (esto SÍ se nota)
-    let speed = 1;
-
-    if(dist < 100){
-      speed = 5; // cerca del mouse acelera
-      ctx.fillStyle = "#66ffcc";
-    } 
-    else if(dist < 200){
-      speed = 2;
-      ctx.fillStyle = "#00ff99";
-    } 
-    else {
-      ctx.fillStyle = "#004d33";
-    }
+    // 🎨 SOLO EFECTO SIMPLE (CLARO Y FUNCIONAL)
+    ctx.fillStyle = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
 
     ctx.fillText(text, x, y);
 
-    // 🔁 movimiento controlado por mouse
+    // reinicio caída
     if(y > canvas.height){
       drops[i] = 0;
     }
 
-    drops[i] += speed;
+    drops[i]++;
   }
 }
 
-setInterval(draw, 33);
+// 🚀 loop estable (SIN setInterval PROBLEMÁTICO)
+function loop(){
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
 
 </script>
+
+</body>
+</html>
