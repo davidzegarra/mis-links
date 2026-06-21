@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TEST MATRIX PRO FINAL</title>
+<title>TEST MATRIX CLEAN</title>
 
 <style>
 /* 🌐 fondo negro */
@@ -31,7 +31,7 @@ body{
 <script>
 
 // ===============================
-// 🌧️ MATRIX FINAL (FUNCIONAL + VISUAL)
+// 🌧️ MATRIX LIMPIO (SIN EXPLOSIONES)
 // ===============================
 
 const canvas = document.getElementById("matrix");
@@ -55,15 +55,16 @@ let drops = Array(columns).fill(1);
 let mouseX = canvas.width / 2;
 let mouseY = canvas.height / 2;
 
+// 🎯 detectar mouse
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 });
 
-// 🔥 ANIMACIÓN PRINCIPAL
+// 🔥 ANIMACIÓN
 function draw(){
 
-  // 🌫️ rastro suave (IMPORTANTE para efecto visual)
+  // 🌫️ rastro suave
   ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -81,29 +82,27 @@ function draw(){
     const dy = mouseY - y;
     const dist = Math.sqrt(dx*dx + dy*dy);
 
-    // 🎨 COLOR VISIBLE (ESTO ES LO QUE TE FALTABA)
+    // 🎨 COLOR SUAVE (SIN EXPLOSIONES)
     let color;
 
     if(dist < 80){
-      color = "#ffffff"; // blanco brillante
-      ctx.shadowBlur = 20;
+      color = "#ffffff"; // cerca del mouse
     }
     else if(dist < 150){
       color = "#00ff99"; // verde fuerte
-      ctx.shadowBlur = 10;
     }
     else if(dist < 250){
       color = "#00aa66"; // verde medio
-      ctx.shadowBlur = 5;
     }
     else{
       color = "#003b2a"; // oscuro
-      ctx.shadowBlur = 0;
     }
 
+    // 🔥 glow suave (sin exagerar)
+    ctx.shadowBlur = dist < 150 ? 8 : 0;
     ctx.shadowColor = "#00ff99";
-    ctx.fillStyle = color;
 
+    ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 
     // 🔁 reinicio lluvia
@@ -115,7 +114,7 @@ function draw(){
   }
 }
 
-// ⚡ velocidad
+// ⚡ velocidad estable
 setInterval(draw, 33);
 
 </script>
