@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MATRIX DEBUG</title>
+<title>MATRIX SIMPLE</title>
 
 <style>
 body{
   margin:0;
-  background:black;
   overflow:hidden;
+  background:black;
 }
 
 #matrix{
@@ -25,65 +25,54 @@ body{
 
 <script>
 
-console.log("🚀 Script iniciado");
-
-// 🧠 verificar canvas
 const canvas = document.getElementById("matrix");
-
-if(!canvas){
-  alert("❌ ERROR: Canvas no encontrado");
-}
-
 const ctx = canvas.getContext("2d");
 
-if(!ctx){
-  alert("❌ ERROR: Contexto no disponible");
-}
+// 📏 tamaño pantalla
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
-
-window.addEventListener("resize", resize);
-
+// 🔢 caracteres
 const chars = "01";
 const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
 
-let columns = Math.floor(canvas.width / fontSize);
-let drops = Array(columns).fill(0);
+// 🌧️ gotas
+let drops = Array(columns).fill(1);
 
-// 🧭 mouse test
+// 🧭 mouse
 let mouseX = 0;
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
 });
 
+// 🔥 animación
 function draw(){
 
-  // 🔥 SI ESTO NO SE VE → YA SABEMOS QUE FALLA
-  ctx.fillStyle = "rgba(0,0,0,0.2)";
+  // 🌫️ limpio suave
+  ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i=0;i<columns;i++){
+  for(let i = 0; i < columns; i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
+    // 🎨 SOLO CAMBIO SIMPLE (como querías)
     if(Math.abs(mouseX - x) < 80){
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#ffffff"; // blanco al pasar mouse
     } else {
-      ctx.fillStyle = "#00ff99";
+      ctx.fillStyle = "#00ff99"; // verde normal
     }
 
     ctx.fillText(text, x, y);
 
+    // 🔁 reinicio caída
     if(y > canvas.height){
       drops[i] = 0;
     }
@@ -92,6 +81,7 @@ function draw(){
   }
 }
 
+// ⚡ loop estable
 setInterval(draw, 33);
 
 </script>
