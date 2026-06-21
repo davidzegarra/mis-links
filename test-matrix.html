@@ -2,16 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MATRIX NUEVO INICIO</title>
+<title>Matrix Simple Funcional</title>
 
 <style>
 body{
   margin:0;
-  overflow:hidden;
   background:black;
+  overflow:hidden;
 }
 
-/* 🎥 canvas ocupa toda la pantalla */
 canvas{
   display:block;
 }
@@ -25,61 +24,60 @@ canvas{
 <script>
 
 // ===============================
-// 🌧️ MATRIX DESDE CERO (ESTABLE)
+// 🌧️ MATRIX SIMPLE 100% FUNCIONAL
 // ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// 📏 ajuste de pantalla
-function fit(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-fit();
-window.addEventListener("resize", fit);
+// 📏 tamaño fijo pantalla
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-// 🔢 caracteres binarios
+// 🔢 caracteres
 const chars = "01";
 
-// ⚙️ tamaño de letra
+// ⚙️ tamaño letra
 const fontSize = 18;
 
 // 🧠 columnas
-let columns;
-let drops;
+const columns = Math.floor(canvas.width / fontSize);
 
-// 🧭 inicializar sistema
-function init(){
-  columns = Math.floor(canvas.width / fontSize);
-  drops = new Array(columns).fill(0);
+// 🌧️ gotas
+const drops = [];
+
+for(let i = 0; i < columns; i++){
+  drops[i] = Math.random() * canvas.height;
 }
-init();
 
-// mouse simple
+// 🧭 mouse simple
 let mouseX = 0;
 document.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
 });
 
-// 🔥 dibujo principal
+// 🔥 animación
 function draw(){
 
-  // fondo limpio (sin manchas raras)
+  // limpiar pantalla
   ctx.fillStyle = "black";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
 
-  for(let i=0;i<columns;i++){
+  for(let i = 0; i < columns; i++){
 
     const text = chars[Math.floor(Math.random()*chars.length)];
 
     const x = i * fontSize;
-    const y = drops[i] * fontSize;
+    const y = drops[i];
 
-    // 🎨 SOLO EFECTO SIMPLE (CLARO Y FUNCIONAL)
-    ctx.fillStyle = (Math.abs(mouseX - x) < 100) ? "#ffffff" : "#00ff99";
+    // 🎨 blanco cerca del mouse, verde normal
+    if(Math.abs(mouseX - x) < 80){
+      ctx.fillStyle = "#ffffff";
+    } else {
+      ctx.fillStyle = "#00ff99";
+    }
 
     ctx.fillText(text, x, y);
 
@@ -88,17 +86,12 @@ function draw(){
       drops[i] = 0;
     }
 
-    drops[i]++;
+    drops[i] += 10;
   }
 }
 
-// 🚀 loop estable (SIN setInterval PROBLEMÁTICO)
-function loop(){
-  draw();
-  requestAnimationFrame(loop);
-}
-
-loop();
+// 🔥 loop estable
+setInterval(draw, 33);
 
 </script>
 
