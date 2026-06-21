@@ -1,98 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>MATRIX SAFE MODE</title>
-
-<style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-}
-
-canvas{
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
 
-try {
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-  console.log("🚀 Iniciando Matrix SAFE MODE");
+const chars = "01";
+const fontSize = 16;
 
-  const canvas = document.getElementById("matrix");
+let columns;
+let drops = [];
 
-  if(!canvas){
-    throw new Error("Canvas no encontrado");
-  }
+let mouseX = 0;
 
-  const ctx = canvas.getContext("2d");
+document.addEventListener("mousemove", e=>{
+  mouseX = e.clientX;
+});
+
+// 🧠 FIX CRÍTICO: recalcular bien SIEMPRE
+function resize(){
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const chars = "01";
-  const fontSize = 18;
+  columns = Math.floor(canvas.width / fontSize);
 
-  const columns = Math.floor(canvas.width / fontSize);
+  // 🔥 IMPORTANTE: distribuir en toda la altura
+  drops = new Array(columns);
 
-  let drops = Array(columns).fill(0);
-
-  let mouseX = 0;
-
-  document.addEventListener("mousemove", e=>{
-    mouseX = e.clientX;
-  });
-
-  function draw(){
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.font = fontSize + "px monospace";
-
-    for(let i = 0; i < columns; i++){
-
-      const text = chars[Math.floor(Math.random()*chars.length)];
-
-      const x = i * fontSize;
-      const y = drops[i] * fontSize;
-
-      ctx.fillStyle = (Math.abs(mouseX - x) < 100)
-        ? "#ffffff"
-        : "#00ff99";
-
-      ctx.fillText(text, x, y);
-
-      if(y > canvas.height){
-        drops[i] = 0;
-      }
-
-      drops[i]++;
-    }
+  for(let i = 0; i < columns; i++){
+    drops[i] = Math.random() * (canvas.height / fontSize);
   }
-
-  setInterval(draw, 33);
-
-} catch (err) {
-
-  console.error("❌ ERROR MATRIX:", err);
-
-  document.body.innerHTML =
-    "<div style='color:white;padding:20px;font-family:Arial'>ERROR MATRIX: " +
-    err.message +
-    "</div>";
-
 }
 
-</script>
+resize();
+window.addEventListener("resize", resize);
 
-</body>
-</html>
+function draw(){
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.font = fontSize + "px monospace";
+
+  for(let i = 0; i < columns; i++){
+
+    const text = chars[Math.floor(Math.random()*chars.length)];
+
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
+
+    // 🎨 blanco cerca del mouse
+    ctx.fillStyle = (Math.abs(mouseX - x) < 100)
+      ? "#ffffff"
+      : "#00ff99";
+
+    ctx.fillText(text, x, y);
+
+    // 🔁 reset
+    if(y > canvas.height){
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 33);
+
+</script>
