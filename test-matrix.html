@@ -1,41 +1,30 @@
 <script>
 
-// 🌧️ MATRIX WOW (INTERACTIVO + NEÓN + ENERGÍA)
-
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-// ⚡ alta resolución (HD real)
-function resize(){
-  canvas.width = window.innerWidth * devicePixelRatio;
-  canvas.height = window.innerHeight * devicePixelRatio;
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-}
-resize();
-window.addEventListener("resize", resize);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-// 🔢 binario
 const chars = "01";
-
-// ⚙️ configuración base
 const fontSize = 16;
-let columns = Math.floor(window.innerWidth / fontSize);
+const columns = Math.floor(canvas.width / fontSize);
+
+// 🌧️ gotas
 let drops = Array(columns).fill(1);
 
-// 🧭 mouse
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
+// 🧭 mouse real
+let mouseX = canvas.width / 2;
+let mouseY = canvas.height / 2;
 
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 });
 
-// 🔥 animación
 function draw(){
 
-  // 🌫️ rastro (efecto energía)
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  ctx.fillStyle = "rgba(0,0,0,0.12)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
@@ -47,37 +36,37 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 📍 distancia mouse
+    // 🔥 DISTANCIA REAL AL MOUSE
     const dx = mouseX - x;
     const dy = mouseY - y;
     const dist = Math.sqrt(dx*dx + dy*dy);
 
-    // ⚡ EFECTO WOW: COLOR DINÁMICO
-    const hue = 120 + dist * 0.5;
+    // 💥 EFECTO REAL (esto SÍ se nota)
+    let speed = 1;
 
-    // 🔥 BRILLO NEÓN
-    ctx.shadowBlur = dist < 150 ? 20 : 8;
-    ctx.shadowColor = "#00ff99";
-
-    // 🎨 COLOR CAMBIANTE
-    ctx.fillStyle = `hsl(${hue}, 100%, ${dist < 150 ? 70 : 50}%)`;
-
-    // ✏️ tamaño dinámico (efecto energía)
-    const size = dist < 120 ? 22 : 14;
-    ctx.font = size + "px monospace";
+    if(dist < 100){
+      speed = 5; // cerca del mouse acelera
+      ctx.fillStyle = "#66ffcc";
+    } 
+    else if(dist < 200){
+      speed = 2;
+      ctx.fillStyle = "#00ff99";
+    } 
+    else {
+      ctx.fillStyle = "#004d33";
+    }
 
     ctx.fillText(text, x, y);
 
-    // 🔁 reinicio
-    if(y > canvas.height && Math.random() > 0.975){
+    // 🔁 movimiento controlado por mouse
+    if(y > canvas.height){
       drops[i] = 0;
     }
 
-    drops[i]++;
+    drops[i] += speed;
   }
 }
 
-// ⚡ velocidad
 setInterval(draw, 33);
 
 </script>
