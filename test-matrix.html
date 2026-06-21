@@ -1,32 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix Mouse Interactive</title>
-
-<style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-}
-
-canvas{
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
-
-// ===============================
-// 🌧️ MATRIX CLÁSICO + INTERACTIVO
-// ===============================
 
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
@@ -37,18 +9,6 @@ const fontSize = 16;
 let columns;
 let drops = [];
 
-// 🧭 mouse tracking
-let mouseX = 0;
-let mouseY = 0;
-
-document.addEventListener("mousemove", e=>{
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-// ===============================
-// 🔧 INICIALIZAR MATRIX
-// ===============================
 function init(){
 
   canvas.width = window.innerWidth;
@@ -56,17 +16,16 @@ function init(){
 
   columns = Math.floor(canvas.width / fontSize);
 
-  // 🔥 lluvia continua estable (NO random caos)
-  drops = new Array(columns).fill(0);
+  // 🔥 cada columna inicia en posición aleatoria
+  drops = new Array(columns).fill(0).map(() =>
+    Math.random() * canvas.height / fontSize
+  );
 }
 
-// ===============================
-// 🎨 DIBUJAR MATRIX
-// ===============================
 function draw(){
 
-  // fondo con leve rastro (efecto real Matrix)
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  // 🔥 TRAZO (IMPORTANTE PARA VER LLUVIA)
+  ctx.fillStyle = "rgba(0,0,0,0.1)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   ctx.font = fontSize + "px monospace";
@@ -78,38 +37,21 @@ function draw(){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
 
-    // 🎯 distancia mouse
-    const dx = mouseX - x;
-    const dy = mouseY - y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-
-    // 🎨 color interactivo
-    if(dist < 80){
-      ctx.fillStyle = "#ffffff"; // blanco al pasar mouse
-    }else{
-      ctx.fillStyle = "#00ff99"; // verde Matrix
-    }
-
+    ctx.fillStyle = "#00ff99";
     ctx.fillText(text, x, y);
 
-    // 🔁 reinicio lluvia
+    // 🔥 movimiento real
+    drops[i] += 1 + Math.random()*1.5;
+
     if(y > canvas.height){
       drops[i] = 0;
     }
-
-    drops[i]++;
   }
 }
 
-// ===============================
-// 🚀 START
-// ===============================
 init();
 window.addEventListener("resize", init);
 
 setInterval(draw, 33);
 
 </script>
-
-</body>
-</html>
