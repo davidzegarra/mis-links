@@ -176,4 +176,13 @@ z-index:-1;
   z-index: -2;
   opacity: 0.9;
 }
-
+/* 🎥 VIDEO PEQUEÑO EN EL SIDEBAR */
+#sidebarVideo{
+  width: 100%;              /* ocupa todo el ancho del sidebar */
+  height: 120px;            /* tamaño pequeño */
+  object-fit: cover;       /* recorta bonito sin deformar */
+  border-radius: 10px;     /* bordes redondeados */
+  margin: 10px 0 20px 0;   /* espacio arriba y abajo */
+  border: 1px solid #00ff8850;
+  box-shadow: 0 0 15px rgba(0,255,136,0.15);
+}
