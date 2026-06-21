@@ -1,94 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>TEST MATRIX LAB</title>
-
-<style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-}
-
-canvas{
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
 <script>
 
-// ===============================
-// 🧪 MATRIX LAB LIMPIO (BASE REAL)
-// ===============================
+document.addEventListener("DOMContentLoaded", () => {
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
 
-// 📏 tamaño seguro
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+  const chars = "01";
+  const fontSize = 16;
 
-// 🔢 binario
-const chars = "01";
+  let columns;
+  let drops = [];
 
-// ⚙️ configuración base
-const fontSize = 18;
+  function init() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-// 🧠 columnas fijas
-const columns = Math.floor(canvas.width / fontSize);
+    columns = Math.floor(canvas.width / fontSize);
 
-// 🌧️ gotas simples (SIN COMPLEJIDAD)
-const drops = new Array(columns).fill(0);
+    // 🔥 clave: distribuir bien en toda la altura
+    drops = Array(columns).fill(0).map(() =>
+      Math.random() * (canvas.height / fontSize)
+    );
+  }
 
-// 🧭 mouse simple
-let mouseX = 0;
+  init();
+  window.addEventListener("resize", init);
 
-document.addEventListener("mousemove", e=>{
-  mouseX = e.clientX;
+  let mouseX = 0;
+  document.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+  });
+
+  function draw() {
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < columns; i++) {
+
+      const text = chars[Math.floor(Math.random() * chars.length)];
+
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      ctx.fillStyle = (Math.abs(mouseX - x) < 100)
+        ? "#ffffff"
+        : "#00ff99";
+
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
+
 });
 
-// 🔥 render base estable
-function draw(){
-
-  // fondo limpio (sin manchas)
-  ctx.fillStyle = "black";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.font = fontSize + "px monospace";
-
-  for(let i = 0; i < columns; i++){
-
-    const text = chars[Math.floor(Math.random()*chars.length)];
-
-    const x = i * fontSize;
-    const y = drops[i] * fontSize;
-
-    // 🎨 SOLO EFECTO SIMPLE (NO RIESGO)
-    ctx.fillStyle = (Math.abs(mouseX - x) < 100)
-      ? "#ffffff"
-      : "#00ff99";
-
-    ctx.fillText(text, x, y);
-
-    // reinicio simple
-    if(y > canvas.height){
-      drops[i] = 0;
-    }
-
-    drops[i]++;
-  }
-}
-
-// 🔁 loop estable
-setInterval(draw, 33);
-
 </script>
-
-</body>
-</html>
