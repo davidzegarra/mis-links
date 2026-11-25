@@ -1,65 +1,59 @@
 
 /* ================================
-🌐 ESTILO GENERAL DEL SISTEMA
+   🌐 CONFIGURACIÓN GENERAL
 ================================ */
+
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   color:#00ff99;
   display:flex;
   min-height:100vh;
   background:black;
-  overflow:hidden;
+  isolation:isolate;
 }
 
 /* ================================
-🌌 FONDO ANIMADO (CAPA MÁS ATRÁS)
-👉 decorativo, no interfiere con UI
+   🌌 FONDO ANIMADO
 ================================ */
+
 body::before{
   content:"";
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:
-    radial-gradient(circle at 20% 20%, #00ff5520, transparent 40%),
-    radial-gradient(circle at 80% 80%, #00ffaa20, transparent 40%);
-  animation: move 15s ease-in-out infinite alternate;
+    radial-gradient(circle at 20% 20%,#00ff5520,transparent 40%),
+    radial-gradient(circle at 80% 80%,#00ffaa20,transparent 40%);
+  animation:move 15s ease-in-out infinite alternate;
   z-index:-3;
   pointer-events:none;
 }
 
-/* ================================
-🌑 OSCURECIMIENTO GLOBAL
-👉 mejora contraste del texto
-================================ */
 body::after{
   content:"";
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.55);
+  inset:0;
+  background:rgba(0,0,0,.55);
   z-index:-2;
   pointer-events:none;
 }
 
-/* ================================
-🔄 ANIMACIÓN DEL FONDO
-================================ */
 @keyframes move{
   from{transform:scale(1);}
   to{transform:scale(1.2);}
 }
 
 /* ================================
-📌 SIDEBAR (MENÚ LATERAL)
+   📌 MENÚ LATERAL
 ================================ */
+
 .sidebar{
-  width:240px;
+  width:280px;
+  flex-shrink:0;
   background:#0b1116;
   padding:20px;
   border-right:1px solid #00ff8850;
@@ -67,55 +61,62 @@ body::after{
   z-index:2;
 }
 
-/* 🧠 TÍTULO DEL SISTEMA */
 .sidebar h2{
   color:#00ff99;
   text-shadow:0 0 10px #00ff99;
 }
 
-/* 🔗 LINKS */
-.sidebar a{
+.sidebar a,
+.sidebar .folder{
   display:block;
   padding:10px;
   margin:6px 0;
   color:#aaa;
   text-decoration:none;
   border-radius:8px;
-  transition:0.3s;
+  transition:.3s;
 }
 
-.sidebar a:hover{
+.sidebar .folder{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  font:inherit;
+}
+
+.sidebar a:hover,
+.sidebar .folder:hover{
   background:#00ff8820;
   color:#00ff99;
 }
 
 /* ================================
-📊 CONTENIDO PRINCIPAL
+   📊 CONTENIDO PRINCIPAL
 ================================ */
+
 .main{
   flex:1;
+  min-width:0;
   padding:20px;
   position:relative;
   z-index:2;
 }
 
-/* ================================
-🧠 HEADER SUPERIOR
-================================ */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:10px;
 }
 
-/* ✨ EFECTO NEÓN */
 .glow{
   text-shadow:0 0 10px #00ff99;
 }
 
 /* ================================
-🔳 GRID DE BOTONES
+   🔳 CUADROS DE REDES SOCIALES
 ================================ */
+
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -123,15 +124,12 @@ body::after{
   margin-top:20px;
 }
 
-/* ================================
-🔘 CARDS
-================================ */
 .card{
   background:#0c141a;
   padding:15px;
   border-radius:12px;
   border:1px solid #00ff8840;
-  transition:0.3s;
+  transition:.3s;
   text-decoration:none;
   color:#00ff99;
   text-align:center;
@@ -143,8 +141,9 @@ body::after{
 }
 
 /* ================================
-📰 NOTICIAS
+   📰 NOTICIAS
 ================================ */
+
 .news{
   margin-top:30px;
   background:#0b1116;
@@ -153,9 +152,6 @@ body::after{
   border:1px solid #00ff8850;
 }
 
-/* ================================
-🎥 BLOQUE DE NOTICIAS
-================================ */
 .video{
   margin:10px 0;
   padding:10px;
@@ -164,17 +160,26 @@ body::after{
   border-radius:8px;
 }
 
-/* ================================
-🔽 MENÚ OCULTO
-================================ */
-#linksMenu{
-  display:none;
-  padding-left:10px;
+.video a{
+  color:#8bc8ff;
 }
 
 /* ================================
-🔘 BOTÓN
+   📁 MENÚ DE CARPETAS
 ================================ */
+
+#linksMenu{
+  padding-left:10px;
+}
+
+#linksMenu[hidden]{
+  display:none;
+}
+
+/* ================================
+   🔘 BOTONES
+================================ */
+
 button{
   background:#00ff99;
   border:none;
@@ -184,30 +189,159 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  opacity:.5;
+  cursor:wait;
+}
+
 /* ================================
-🎥 VIDEO SIDEBAR
+   🎥 VIDEO LATERAL
 ================================ */
+
 #sidebarVideo{
   width:100%;
   height:120px;
   object-fit:cover;
   border-radius:10px;
-  margin:10px 0 20px 0;
+  margin:10px 0 20px;
   border:1px solid #00ff8850;
-  box-shadow:0 0 15px rgba(0,255,136,0.15);
+  box-shadow:0 0 15px rgba(0,255,136,.15);
 }
 
 /* ================================
-🌧️ MATRIX (CAPA MEDIA)
-👉 fondo interactivo principal
+   🌧️ FONDO MATRIX
 ================================ */
+
 #matrix{
   position:fixed;
-  top:0;
-  left:0;
+  inset:0;
   width:100%;
   height:100%;
   z-index:-1;
   pointer-events:none;
-  will-change: transform;
+}
+
+/* ================================
+   🔐 VENTANA DE SEGURIDAD
+================================ */
+
+#accessDialog{
+  width:min(420px,calc(100% - 32px));
+  background:#0b1116;
+  color:#00ff99;
+  border:1px solid #00ff99;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 0 30px #00ff9933;
+}
+
+#accessDialog::backdrop{
+  background:rgba(0,0,0,.78);
+}
+
+#accessDialog h2{
+  font-size:21px;
+  text-shadow:0 0 10px #00ff9950;
+}
+
+#folderName{
+  color:#b5c8c0;
+}
+
+/* 🔑 CAMPO DE CONTRASEÑA */
+
+#password{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:12px;
+  background:#05090c;
+  border:1px solid #32765c;
+  border-radius:8px;
+  color:#fff;
+  font:inherit;
+}
+
+/* 👁️ MOSTRAR CONTRASEÑA */
+
+.show{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  color:#b5c8c0;
+  font-size:14px;
+}
+
+/* ⚠️ MENSAJES DE SEGURIDAD */
+
+#accessStatus{
+  min-height:22px;
+  color:#ffb5a8;
+  overflow-wrap:anywhere;
+}
+
+/* 🔘 BOTONES DE ACCESO */
+
+.actions{
+  display:flex;
+  gap:10px;
+}
+
+.actions button{
+  flex:1;
+  font-weight:bold;
+}
+
+#cancel{
+  background:#18262b;
+  color:#00ff99;
+  border:1px solid #32765c;
+}
+
+/* 🔑 COMPATIBILIDAD CON GESTORES */
+
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+  border:0;
+}
+
+/* ================================
+   📱 ADAPTACIÓN A CELULARES
+================================ */
+
+@media(max-width:680px){
+
+  body{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    border-right:0;
+    border-bottom:1px solid #00ff8850;
+  }
+
+  .main{
+    padding:15px;
+  }
+
+  .header{
+    flex-wrap:wrap;
+  }
+
+  .header h1{
+    font-size:25px;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
 }
