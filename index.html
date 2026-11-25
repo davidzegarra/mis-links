@@ -1,97 +1,169 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 🧠 Título que aparece en la pestaña del navegador -->
 <title>SDZO Cyber Hub</title>
 
-<!-- 🎨 Conectamos el archivo de diseño (CSS externo) -->
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
- <!-- 🌧️ FONDO MATRIX ANIMADO (BINARIOS EN MOVIMIENTO) -->
-<canvas id="matrix"></canvas> 
+<!-- 🌧️ FONDO MATRIX -->
+<canvas id="matrix" aria-hidden="true"></canvas>
 
-<!-- 📌 SIDEBAR: menú lateral de la web -->
+<!-- 📌 MENÚ LATERAL -->
 <div class="sidebar">
 
-<!-- 🏷️ Nombre del sistema -->
 <h2>SDZO SYSTEM</h2>
 
-  <!-- 🎥 VIDEO PEQUEÑO EN EL SIDEBAR -->
-<!-- Este video se muestra solo en la parte superior del menú -->
+<!-- 🎥 VIDEO LATERAL -->
 <video id="sidebarVideo" autoplay muted loop playsinline>
   <source src="fondo_final.mp4" type="video/mp4">
 </video>
 
-<!-- 🏠 Botón de inicio -->
 <a href="#">Inicio</a>
 
-<!-- 🔽 Botón que abre/cierra links -->
-<a href="#" onclick="toggleLinks()">🔗 Links ▼</a>
+<!-- 🔗 MENÚ DE ENLACES -->
+<a href="#" id="linksToggle"
+   aria-expanded="false"
+   aria-controls="linksMenu">
+   🔗 Links ▼
+</a>
 
-<!-- 📁 Submenú de links (Drive) -->
-<div id="linksMenu">
-  <a href="https://drive.google.com/drive/folders/1ifjJaboSoH1j6NP3ZRUulvXGduhM7j8F?usp=drive_link" target="_blank">
-  📁 Programas 1
-  </a>
+<!-- 🔐 CARPETAS PROTEGIDAS -->
+<div id="linksMenu" hidden>
 
-  <a href="https://drive.google.com/drive/folders/1y3MnxSUCrYRmlKNTk8Gcuopo7ri2-Vr5?usp=drive_link" target="_blank">
-  📁 Programas 2
-  </a>
+  <button class="folder" data-folder="programas1">
+    📁 Programas 1 🔒
+  </button>
+
+  <button class="folder" data-folder="programas2">
+    📁 Programas 2 🔒
+  </button>
+
 </div>
 
-<!-- 📄 Más opciones del menú -->
 <a href="#">Contenido</a>
 <a href="#">Noticias</a>
 <a href="#">Contacto</a>
+
 </div>
 
 <!-- 📊 CONTENIDO PRINCIPAL -->
 <div class="main">
 
-<!-- 🧠 Encabezado -->
 <div class="header">
 
 <h1 class="glow">
 DASHBOARD CYBER 2026
 </h1>
 
-<!-- 🔄 Botón para actualizar noticias -->
-<button onclick="loadNews()">Actualizar noticias</button>
+<button id="refreshNews">
+Actualizar noticias
+</button>
 
 </div>
 
-<!-- 📝 Texto descriptivo -->
 <p>Noticias reales de ciberseguridad en tiempo real.</p>
 
-<!-- 🔗 CUADROS DE LINKS RÁPIDOS -->
+<!-- 🌐 REDES SOCIALES -->
 <div class="grid">
 
-<a class="card" href="https://wa.me/51999999999" target="_blank">WhatsApp</a>
-<a class="card" href="https://instagram.com" target="_blank">Instagram</a>
-<a class="card" href="https://tiktok.com" target="_blank">TikTok</a>
-<a class="card" href="https://youtube.com" target="_blank">YouTube</a>
+<a class="card"
+   href="https://wa.me/51999999999"
+   target="_blank"
+   rel="noopener noreferrer">WhatsApp</a>
+
+<a class="card"
+   href="https://instagram.com"
+   target="_blank"
+   rel="noopener noreferrer">Instagram</a>
+
+<a class="card"
+   href="https://tiktok.com"
+   target="_blank"
+   rel="noopener noreferrer">TikTok</a>
+
+<a class="card"
+   href="https://youtube.com"
+   target="_blank"
+   rel="noopener noreferrer">YouTube</a>
 
 </div>
 
-<!-- 🧠 SECCIÓN DE NOTICIAS -->
+<!-- 📰 NOTICIAS -->
 <div class="news">
 
 <h3>🧠 Noticias de Ciberseguridad (LIVE)</h3>
 
-<!-- 📦 aquí se cargan noticias automáticamente -->
-<div id="newsBox">Cargando noticias...</div>
-
+<div id="newsBox">
+Cargando noticias...
 </div>
 
 </div>
 
-<!-- ⚙️ conectamos el archivo JS -->
+</div>
+
+<!-- 🔐 VENTANA DE ACCESO RESTRINGIDO -->
+<dialog id="accessDialog" aria-labelledby="accessTitle">
+
+<form id="accessForm">
+
+<h2 id="accessTitle">
+🔐 ACCESO RESTRINGIDO
+</h2>
+
+<p id="folderName"></p>
+
+<!-- Compatibilidad con gestores de contraseñas -->
+<input type="text"
+       name="username"
+       value="SDZO SYSTEM"
+       autocomplete="username"
+       class="sr-only"
+       tabindex="-1"
+       aria-label="Usuario"
+       readonly>
+
+<label for="password">
+Contraseña de seguridad
+</label>
+
+<input id="password"
+       name="password"
+       type="password"
+       autocomplete="current-password"
+       required
+       autofocus>
+
+<label class="show">
+  <input type="checkbox" id="showPassword">
+  Mostrar contraseña
+</label>
+
+<p id="accessStatus" role="status" aria-live="polite"></p>
+
+<div class="actions">
+
+<button id="unlock" type="submit">
+DESBLOQUEAR
+</button>
+
+<button id="cancel" type="button">
+Cancelar
+</button>
+
+</div>
+
+</form>
+
+</dialog>
+
+<!-- ⚙️ JAVASCRIPT -->
 <script src="app.js"></script>
 
 </body>
