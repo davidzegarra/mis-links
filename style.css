@@ -2150,6 +2150,145 @@ body::after {
     }
 }
 
+
+/* =====================================================
+   SDZO SYSTEM 2.1
+   ETAPA 02: CARRUSEL DE PORTADA
+   ===================================================== */
+
+/* Fotografía principal de la portada */
+
+.hero {
+    position: relative;
+    min-height: 420px;
+    isolation: isolate;
+}
+
+.hero > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+    z-index: 0;
+}
+
+/* Sombreado para facilitar la lectura del título */
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 12, 8, 0.92) 0%,
+        rgba(0, 12, 8, 0.65) 40%,
+        rgba(0, 12, 8, 0.10) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* El texto permanece encima de la fotografía */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 65px;
+}
+
+/* Controles inferiores del carrusel */
+
+.hero-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 5;
+    padding: 6px 12px;
+    background: rgba(0, 15, 10, 0.75);
+    border: 1px solid #00ff9940;
+    border-radius: 30px;
+}
+
+/* Flechas y botón de pausa */
+
+.hero-controls button {
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 6px;
+    line-height: 1;
+}
+
+.hero-controls button:hover {
+    color: #00ff99;
+}
+
+.hero-controls button:focus-visible {
+    outline: 2px solid #00ff99;
+    border-radius: 4px;
+}
+
+/* Indicadores de fotografías */
+
+.hero-controls .hero-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border-radius: 50%;
+    background: #718c7e;
+}
+
+.hero-controls .hero-dot.active {
+    background: #00ff99;
+    box-shadow: 0 0 8px #00ff9980;
+}
+
+/* Adaptación a teléfonos móviles */
+
+@media (max-width: 680px) {
+
+    .hero {
+        min-height: 430px;
+    }
+
+    .hero-content {
+        padding-bottom: 75px;
+    }
+
+    .hero::after {
+        background: linear-gradient(
+            90deg,
+            rgba(0, 12, 8, 0.90),
+            rgba(0, 12, 8, 0.45)
+        );
+    }
+
+    .hero-controls {
+        gap: 8px;
+        bottom: 12px;
+    }
+}
+
+/* Accesibilidad: respetar movimiento reducido */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero > img {
+        transition: none;
+    }
+}
+
+/* FIN ESTILOS DEL CARRUSEL */
+
+
 /* FIN DE LA ETAPA 01 */
 
 
