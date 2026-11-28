@@ -1,40 +1,170 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SDZO Cyber Hub</title>
+<!-- =========================================
+     01. CONFIGURACIÓN GENERAL
+========================================== -->
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+      content="SDZO SYSTEM: soporte informático, redes,
+      automatización, soluciones digitales y ciberseguridad.">
+
+<meta name="theme-color" content="#050a0d">
+
+<title>SDZO SYSTEM | Tecnología y Soluciones Digitales</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<!-- 🌧️ FONDO MATRIX -->
+<!-- =========================================
+     02. FONDO MATRIX ORIGINAL
+     NO MODIFICAR
+========================================== -->
+
 <canvas id="matrix" aria-hidden="true"></canvas>
 
-<!-- 📌 MENÚ LATERAL -->
-<div class="sidebar">
 
-<h2>SDZO SYSTEM</h2>
+<!-- =========================================
+     03. MENÚ LATERAL IZQUIERDO
+========================================== -->
 
-<!-- 🎥 VIDEO LATERAL -->
-<video id="sidebarVideo" autoplay muted loop playsinline>
+<aside class="sidebar" id="sidebar">
+
+<h2 class="brand">SDZO SYSTEM</h2>
+
+<p class="brand-subtitle">
+  IT & DIGITAL SOLUTIONS
+</p>
+
+<!-- VIDEO ORIGINAL -->
+
+<video id="sidebarVideo"
+       autoplay
+       muted
+       loop
+       playsinline>
+
   <source src="fondo_final.mp4" type="video/mp4">
+
 </video>
 
-<a href="#">Inicio</a>
 
-<!-- 🔗 MENÚ DE ENLACES -->
-<a href="#" id="linksToggle"
-   aria-expanded="false"
-   aria-controls="linksMenu">
-   🔗 Links ▼
+<!-- NAVEGACIÓN PRINCIPAL -->
+
+<nav class="navigation" aria-label="Menú principal">
+
+<p class="menu-label">GENERAL</p>
+
+<a href="#inicio" class="nav-link active">
+  🏠 Inicio
 </a>
 
-<!-- 🔐 CARPETAS PROTEGIDAS -->
+
+<!-- SUBMENÚ DE SERVICIOS INFORMÁTICOS -->
+
+<details class="submenu">
+
+  <summary>💻 Servicios informáticos</summary>
+
+  <div class="submenu-items">
+
+    <a href="#mantenimiento">Mantenimiento informático</a>
+
+    <a href="#redes">Redes y conectividad</a>
+
+    <a href="#optimizacion">Optimización de equipos</a>
+
+    <a href="#software">Instalación de software</a>
+
+    <a href="#impresoras">Impresoras y periféricos</a>
+
+    <a href="#soporte-remoto">Asistencia remota</a>
+
+  </div>
+
+</details>
+
+
+<!-- SUBMENÚ DE SOLUCIONES DIGITALES -->
+
+<details class="submenu">
+
+  <summary>⚙️ Soluciones digitales</summary>
+
+  <div class="submenu-items">
+
+    <a href="#automatizacion">Automatización</a>
+
+    <a href="#dashboard">Dashboards web</a>
+
+    <a href="#ofimatica">Ofimática profesional</a>
+
+    <a href="#inteligencia-artificial">Inteligencia artificial</a>
+
+    <a href="#diseno">Diseño gráfico</a>
+
+    <a href="#video">Edición audiovisual</a>
+
+  </div>
+
+</details>
+
+<a href="#sobre-mi" class="nav-link">
+  👤 Sobre mí
+</a>
+
+<a href="#proyectos" class="nav-link">
+  📂 Portafolio
+</a>
+
+
+<!-- SUBMENÚ DE CIBERSEGURIDAD -->
+
+<p class="menu-label">CIBERSEGURIDAD</p>
+
+<details class="submenu">
+
+  <summary>🛡️ Seguridad informática</summary>
+
+  <div class="submenu-items">
+
+    <a href="#ciberseguridad">
+      Asesoramiento en seguridad
+    </a>
+
+    <a href="#noticias">
+      Cyber News
+    </a>
+
+  </div>
+
+</details>
+
+
+<!-- ÁREA PRIVADA ORIGINAL -->
+
+<p class="menu-label">RECURSOS</p>
+
+<a href="#"
+   id="linksToggle"
+   aria-expanded="false"
+   aria-controls="linksMenu">
+
+   🔒 Área privada ▼
+
+</a>
+
 <div id="linksMenu" hidden>
 
   <button class="folder" data-folder="programas1">
@@ -47,79 +177,857 @@
 
 </div>
 
-<a href="#">Contenido</a>
-<a href="#">Noticias</a>
-<a href="#">Contacto</a>
+
+<!-- CONTACTO -->
+
+<a href="#contacto" class="nav-link">
+  ✉️ Contacto
+</a>
+
+<a href="https://www.linkedin.com/in/sixto-david-zegarra-orosco-a093a7142/"
+   target="_blank"
+   rel="noopener noreferrer">
+
+   LinkedIn ↗
+
+</a>
+
+</nav>
+
+<div class="sidebar-footer">
+
+  <p>🟢 SDZO SYSTEM</p>
+
+  <small>Madrid, España</small>
 
 </div>
 
-<!-- 📊 CONTENIDO PRINCIPAL -->
-<div class="main">
+</aside>
 
-<div class="header">
 
-<h1 class="glow">
-DASHBOARD CYBER 2026
-</h1>
+<!-- =========================================
+     04. CONTENEDOR PRINCIPAL
+========================================== -->
 
-<button id="refreshNews">
-Actualizar noticias
+<main class="main" id="mainContent">
+
+<!-- BOTÓN DE MENÚ PARA MÓVILES -->
+
+<button id="mobileMenu"
+        class="mobile-menu"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="sidebar">
+
+  ☰ SDZO SYSTEM
+
 </button>
 
+
+<!-- =========================================
+     05. PORTADA PRINCIPAL
+========================================== -->
+
+<section id="inicio" class="page-section">
+
+<div class="hero">
+
+  <img src="img/portada.webp"
+       alt="Espacio de trabajo informático y tecnología digital"
+       width="1280"
+       height="720"
+       fetchpriority="high">
+
+  <div class="hero-content">
+
+    <span class="hero-label">
+      TECNOLOGÍA · SEGURIDAD · INNOVACIÓN
+    </span>
+
+    <h1 class="glow">
+
+      Tu tecnología,<br>
+
+      <span>nuestras soluciones.</span>
+
+    </h1>
+
+    <p>
+      Soporte informático, automatización de procesos,
+      soluciones digitales y seguridad informática.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="#servicios" class="btn-primary">
+        Explorar servicios
+      </a>
+
+      <a href="#sobre-mi" class="btn-secondary">
+        Conocer SDZO
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
 
-<p>Noticias reales de ciberseguridad en tiempo real.</p>
 
-<!-- 🌐 REDES SOCIALES -->
-<div class="grid">
+<!-- =========================================
+     06. TARJETAS DE SERVICIOS
+========================================== -->
 
-<a class="card"
-   href="https://wa.me/51999999999"
-   target="_blank"
-   rel="noopener noreferrer">WhatsApp</a>
+<div id="servicios" class="services-section">
 
-<a class="card"
-   href="https://instagram.com"
-   target="_blank"
-   rel="noopener noreferrer">Instagram</a>
+<h2>Servicios tecnológicos</h2>
 
-<a class="card"
-   href="https://tiktok.com"
-   target="_blank"
-   rel="noopener noreferrer">TikTok</a>
+<p class="section-description">
 
-<a class="card"
-   href="https://youtube.com"
-   target="_blank"
-   rel="noopener noreferrer">YouTube</a>
+  Soluciones informáticas y digitales
+  para particulares y organizaciones.
+
+</p>
+
+<div class="services-grid">
+
+
+<!-- SERVICIO 01: MANTENIMIENTO -->
+
+<a href="#mantenimiento" class="service-card">
+
+  <img src="img/mantenimiento.webp"
+       alt="Mantenimiento preventivo de ordenadores"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Mantenimiento informático</h3>
+
+    <p>Mantenimiento de ordenadores y portátiles.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 02: REDES -->
+
+<a href="#redes" class="service-card">
+
+  <img src="img/redes.webp"
+       alt="Cableado Ethernet y conexiones de red"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Redes y conectividad</h3>
+
+    <p>Ethernet, crimpado RJ45, routers y Wi-Fi.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 03: OPTIMIZACIÓN -->
+
+<a href="#optimizacion" class="service-card">
+
+  <img src="img/optimizacion.webp"
+       alt="Actualización de memoria RAM y discos SSD"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Actualización y optimización de equipos</h3>
+
+    <p>Ampliación de hardware y mejora del rendimiento.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 04: SOFTWARE -->
+
+<a href="#software" class="service-card">
+
+  <img src="img/software.webp"
+       alt="Instalación de programas en un ordenador"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Instalación de software</h3>
+
+    <p>Aplicaciones, antivirus y controladores.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 05: IMPRESORAS -->
+
+<a href="#impresoras" class="service-card">
+
+  <img src="img/impresoras.webp"
+       alt="Configuración de impresoras en red"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Impresoras y periféricos</h3>
+
+    <p>Instalación y configuración de dispositivos.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 06: SOPORTE REMOTO -->
+
+<a href="#soporte-remoto" class="service-card">
+
+  <img src="img/soporte-remoto.webp"
+       alt="Asistencia informática mediante conexión remota"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Asistencia técnica remota</h3>
+
+    <p>Soporte a distancia para aplicaciones y programas.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 07: AUTOMATIZACIÓN -->
+
+<a href="#automatizacion" class="service-card">
+
+  <img src="img/automatizacion.webp"
+       alt="Automatización de procesos e integración de datos"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Automatización e integración de datos</h3>
+
+    <p>Google Apps Script, hojas de cálculo y Firebase.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 08: DASHBOARDS -->
+
+<a href="#dashboard" class="service-card">
+
+  <img src="img/dashboard.webp"
+       alt="Panel web de indicadores y resultados"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Dashboards e indicadores de gestión</h3>
+
+    <p>Visualización web de resultados y productividad.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 09: OFIMÁTICA -->
+
+<a href="#ofimatica" class="service-card">
+
+  <img src="img/ofimatica.webp"
+       alt="Herramientas ofimáticas y hojas de cálculo"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Ofimática y gestión de información</h3>
+
+    <p>Microsoft Office y hojas de cálculo.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 10: INTELIGENCIA ARTIFICIAL -->
+
+<a href="#inteligencia-artificial" class="service-card">
+
+  <img src="img/inteligencia-artificial.webp"
+       alt="Inteligencia artificial aplicada a proyectos"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Inteligencia artificial y productividad</h3>
+
+    <p>Asistencia en proyectos y organización de trabajos.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 11: DISEÑO GRÁFICO -->
+
+<a href="#diseno" class="service-card">
+
+  <img src="img/diseno.webp"
+       alt="Diseño gráfico y creación de materiales digitales"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Diseño gráfico digital</h3>
+
+    <p>Tarjetas comerciales y materiales publicitarios.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
+
+<!-- SERVICIO 12: EDICIÓN DE VIDEO -->
+
+<a href="#video" class="service-card">
+
+  <img src="img/video.webp"
+       alt="Edición de contenido audiovisual"
+       width="640" height="360"
+       loading="lazy" decoding="async">
+
+  <div class="service-content">
+
+    <h3>Edición audiovisual</h3>
+
+    <p>Edición de vídeos y contenidos multimedia.</p>
+
+    <span>Ver detalles →</span>
+
+  </div>
+
+</a>
+
 
 </div>
 
-<!-- 📰 NOTICIAS -->
+</div>
+
+
+<!-- =========================================
+     07. SERVICIO DESTACADO DE CIBERSEGURIDAD
+========================================== -->
+
+<a href="#ciberseguridad" class="security-banner">
+
+  <img src="img/ciberseguridad.webp"
+       alt="Seguridad informática y protección de información"
+       width="960" height="540"
+       loading="lazy" decoding="async">
+
+  <div class="security-content">
+
+    <span>ESPECIALIZACIÓN PROFESIONAL</span>
+
+    <h2>Seguridad informática</h2>
+
+    <p>
+      Asesoramiento en protección de información,
+      seguridad de dispositivos y prevención de riesgos digitales.
+    </p>
+
+    <span>Conocer más →</span>
+
+  </div>
+
+</a>
+
+</section>
+
+
+<!-- =========================================
+     08. FICHAS INDIVIDUALES DE SERVICIOS
+     CONTENIDO AMPLIABLE
+========================================== -->
+
+<section id="serviceDetails" class="service-details">
+
+<article id="mantenimiento" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Mantenimiento informático</h2>
+
+  <p>
+    Mantenimiento preventivo de ordenadores y portátiles,
+    limpieza, diagnóstico y revisión del funcionamiento.
+  </p>
+
+</article>
+
+<article id="redes" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Redes y conectividad</h2>
+
+  <p>
+    Cableado Ethernet, crimpado de conectores RJ45,
+    configuración de routers y redes Wi-Fi.
+  </p>
+
+</article>
+
+<article id="optimizacion" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Actualización y optimización de equipos</h2>
+
+  <p>
+    Asesoramiento en ampliación de memoria RAM,
+    instalación de discos SSD y sustitución de componentes
+    compatibles para mejorar el rendimiento.
+  </p>
+
+</article>
+
+<article id="software" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Instalación de software</h2>
+
+  <p>
+    Instalación y configuración de aplicaciones,
+    antivirus y controladores debidamente licenciados.
+  </p>
+
+</article>
+
+<article id="impresoras" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Impresoras y periféricos</h2>
+
+  <p>
+    Configuración de impresoras locales, inalámbricas
+    y compartidas mediante redes.
+  </p>
+
+</article>
+
+<article id="soporte-remoto" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Asistencia técnica remota</h2>
+
+  <p>
+    Instalación y configuración de aplicaciones a distancia
+    mediante conexiones autorizadas por el usuario.
+  </p>
+
+</article>
+
+<article id="automatizacion" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Automatización e integración de datos</h2>
+
+  <p>
+    Automatización de tareas repetitivas mediante
+    Google Apps Script e integración de información
+    con bases de datos Firebase.
+  </p>
+
+</article>
+
+<article id="dashboard" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Dashboards e indicadores de gestión</h2>
+
+  <p>
+    Desarrollo de paneles web para visualizar resultados,
+    indicadores de producción y seguimiento de actividades.
+  </p>
+
+</article>
+
+<article id="ofimatica" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Ofimática y gestión de información</h2>
+
+  <p>
+    Manejo de Microsoft Office y hojas de cálculo
+    para organizar documentos e información.
+  </p>
+
+</article>
+
+<article id="inteligencia-artificial" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Inteligencia artificial y productividad</h2>
+
+  <p>
+    Aplicación de herramientas de inteligencia artificial
+    para apoyar proyectos, organizar trabajos
+    y mejorar la productividad.
+  </p>
+
+</article>
+
+<article id="diseno" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Diseño gráfico digital</h2>
+
+  <p>
+    Diseño de tarjetas de presentación, publicidad
+    y materiales gráficos. Nivel intermedio.
+  </p>
+
+</article>
+
+<article id="video" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Edición audiovisual</h2>
+
+  <p>
+    Edición de vídeos y preparación de contenidos
+    multimedia. Nivel intermedio.
+  </p>
+
+</article>
+
+<article id="ciberseguridad" class="service-detail">
+
+  <a href="#servicios">← Volver a servicios</a>
+
+  <h2>Asesoramiento en seguridad informática</h2>
+
+  <p>
+    Orientación sobre protección de información,
+    prevención de riesgos y buenas prácticas
+    de seguridad digital.
+  </p>
+
+</article>
+
+</section>
+
+
+<!-- =========================================
+     09. PERFIL PROFESIONAL
+========================================== -->
+
+<section id="sobre-mi" class="page-section">
+
+<div class="profile-panel">
+
+  <span>PERFIL PROFESIONAL</span>
+
+  <h2>Sobre mí</h2>
+
+  <h3>Sixto David Zegarra Orosco</h3>
+
+  <p>
+    Ingeniero de Sistemas y Máster en Seguridad Informática.
+  </p>
+
+  <p>
+    Profesional con experiencia en actividades
+    administrativas, soporte informático,
+    gestión de información y herramientas digitales.
+  </p>
+
+  <p>
+    Interesado en la integración de tecnología,
+    automatización de procesos, seguridad informática
+    e inteligencia artificial para mejorar la productividad.
+  </p>
+
+  <div class="skills">
+
+    <span>Soporte TI</span>
+
+    <span>Seguridad informática</span>
+
+    <span>Google Apps Script</span>
+
+    <span>Firebase</span>
+
+    <span>Gestión administrativa</span>
+
+    <span>Inteligencia artificial</span>
+
+  </div>
+
+  <a class="btn-primary linkedin-button"
+     href="https://www.linkedin.com/in/sixto-david-zegarra-orosco-a093a7142/"
+     target="_blank"
+     rel="noopener noreferrer">
+
+     Ver perfil en LinkedIn ↗
+
+  </a>
+
+</div>
+
+</section>
+
+
+<!-- =========================================
+     10. PORTAFOLIO DE PROYECTOS
+========================================== -->
+
+<section id="proyectos" class="page-section">
+
+<h2>Proyectos e innovación</h2>
+
+<div class="projects-grid">
+
+  <article class="project-card">
+
+    <span>EXTENSIÓN DE NAVEGADOR</span>
+
+    <h3>Respaldo de conversaciones</h3>
+
+    <p>
+      Extensión de Chrome para respaldar conversaciones
+      de un proyecto propio de ChatGPT en archivos TXT
+      almacenados en Google Drive.
+    </p>
+
+    <small>Prototipo funcional</small>
+
+  </article>
+
+  <article class="project-card">
+
+    <span>AUTOMATIZACIÓN</span>
+
+    <h3>Integración de datos de viáticos</h3>
+
+    <p>
+      Sincronización de información desde Google Sheets
+      hacia Firebase mediante Google Apps Script.
+    </p>
+
+    <small>
+      Integración funcional. Sistema de alertas en desarrollo.
+    </small>
+
+  </article>
+
+  <article class="project-card">
+
+    <span>DESARROLLO WEB</span>
+
+    <h3>SDZO Cyber Hub</h3>
+
+    <p>
+      Portal tecnológico desarrollado mediante HTML,
+      CSS y JavaScript, con noticias de ciberseguridad
+      y enlaces protegidos mediante cifrado AES-256.
+    </p>
+
+    <small>Proyecto en evolución</small>
+
+  </article>
+
+</div>
+
+</section>
+
+
+<!-- =========================================
+     11. NOTICIAS DE CIBERSEGURIDAD
+     IDENTIFICADORES ORIGINALES CONSERVADOS
+========================================== -->
+
+<section id="noticias" class="page-section">
+
 <div class="news">
 
-<h3>🧠 Noticias de Ciberseguridad (LIVE)</h3>
+  <div class="header">
 
-<div id="newsBox">
-Cargando noticias...
+    <h2 class="glow">CYBER NEWS</h2>
+
+    <button id="refreshNews" type="button">
+
+      Actualizar noticias
+
+    </button>
+
+  </div>
+
+  <p>
+
+    Actualidad, amenazas, vulnerabilidades
+    y novedades de ciberseguridad.
+
+  </p>
+
+  <div id="newsBox">
+
+    Cargando noticias...
+
+  </div>
+
 </div>
 
-</div>
+</section>
+
+
+<!-- =========================================
+     12. CONTACTO Y REDES PROFESIONALES
+========================================== -->
+
+<section id="contacto" class="page-section">
+
+<div class="contact-panel">
+
+  <h2>Contacto</h2>
+
+  <p>Madrid, España</p>
+
+  <p>
+
+    Conoce mi trayectoria profesional,
+    competencias y proyectos tecnológicos.
+
+  </p>
+
+  <div class="contact-links">
+
+    <a href="https://www.linkedin.com/in/sixto-david-zegarra-orosco-a093a7142/"
+       class="social-link"
+       target="_blank"
+       rel="noopener noreferrer">
+
+       LinkedIn ↗
+
+    </a>
+
+  </div>
+
+  <!--
+    ESPACIO RESERVADO PARA FUTURAS REDES SOCIALES
+
+    WhatsApp
+    Instagram
+    YouTube
+    TikTok
+
+    Se activarán cuando corresponda.
+  -->
 
 </div>
 
-<!-- 🔐 VENTANA DE ACCESO RESTRINGIDO -->
-<dialog id="accessDialog" aria-labelledby="accessTitle">
+</section>
+
+
+<!-- =========================================
+     13. PIE DE PÁGINA
+========================================== -->
+
+<footer class="footer">
+
+  <p>© 2026 SDZO SYSTEM</p>
+
+  <p>Tecnología, seguridad e innovación.</p>
+
+  <a href="https://www.linkedin.com/in/sixto-david-zegarra-orosco-a093a7142/"
+     target="_blank"
+     rel="noopener noreferrer">
+
+     LinkedIn
+
+  </a>
+
+</footer>
+
+</main>
+
+
+<!-- =========================================
+     14. VENTANA DE ACCESO RESTRINGIDO
+     ESTRUCTURA ORIGINAL CONSERVADA
+========================================== -->
+
+<dialog id="accessDialog"
+        aria-labelledby="accessTitle">
 
 <form id="accessForm">
 
 <h2 id="accessTitle">
-🔐 ACCESO RESTRINGIDO
+
+  🔐 ACCESO RESTRINGIDO
+
 </h2>
 
 <p id="folderName"></p>
 
-<!-- Compatibilidad con gestores de contraseñas -->
 <input type="text"
        name="username"
        value="SDZO SYSTEM"
@@ -130,7 +1038,9 @@ Cargando noticias...
        readonly>
 
 <label for="password">
-Contraseña de seguridad
+
+  Contraseña de seguridad
+
 </label>
 
 <input id="password"
@@ -141,21 +1051,30 @@ Contraseña de seguridad
        autofocus>
 
 <label class="show">
+
   <input type="checkbox" id="showPassword">
+
   Mostrar contraseña
+
 </label>
 
-<p id="accessStatus" role="status" aria-live="polite"></p>
+<p id="accessStatus"
+   role="status"
+   aria-live="polite"></p>
 
 <div class="actions">
 
-<button id="unlock" type="submit">
-DESBLOQUEAR
-</button>
+  <button id="unlock" type="submit">
 
-<button id="cancel" type="button">
-Cancelar
-</button>
+    DESBLOQUEAR
+
+  </button>
+
+  <button id="cancel" type="button">
+
+    Cancelar
+
+  </button>
 
 </div>
 
@@ -163,8 +1082,13 @@ Cancelar
 
 </dialog>
 
-<!-- ⚙️ JAVASCRIPT -->
+
+<!-- =========================================
+     15. JAVASCRIPT
+========================================== -->
+
 <script src="app.js"></script>
 
 </body>
+
 </html>
