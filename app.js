@@ -1232,7 +1232,6 @@ function prepareImageFallbacks(){
 
 }
 
-
 // ==============================================
 // 10. INICIAR NUEVA INTERFAZ SDZO V2
 // ==============================================
@@ -1243,9 +1242,267 @@ prepareImageFallbacks();
 
 navigate();
 
-
 // ==============================================
 // FIN DEL MÓDULO SDZO SYSTEM 2.0
 // ==============================================
+
+
+/* =====================================================
+   SDZO SYSTEM 2.1
+   ETAPA 02: CARRUSEL AUTOMÁTICO DE PORTADA
+   ===================================================== */
+
+(function () {
+
+    // 01. Localizar la portada existente
+
+    const hero = document.querySelector(".hero");
+
+    if (!hero) return;
+
+    const heroImage = hero.querySelector("img");
+
+    if (!heroImage) return;
+
+    // 02. Fotografías disponibles en GitHub
+    // Posteriormente utilizaremos nuevas imágenes HD.
+
+    const slides = [
+        {
+            src: "img/portada.webp",
+            alt: "Tecnología y soluciones digitales"
+        },
+        {
+            src: "img/mantenimiento.webp",
+            alt: "Mantenimiento informático"
+        },
+        {
+            src: "img/redes.webp",
+            alt: "Redes y conectividad"
+        },
+        {
+            src: "img/dashboard.webp",
+            alt: "Automatización y análisis de datos"
+        },
+        {
+            src: "img/ciberseguridad.webp",
+            alt: "Seguridad informática"
+        }
+    ];
+
+    // 03. Configuración del carrusel
+
+    const interval = 5000;
+    let currentIndex = 0;
+    let timer = null;
+    let requestNumber = 0;
+
+    const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let paused = reducedMotion;
+
+    // 04. Crear los controles
+
+    const controls = document.createElement("div");
+
+    controls.className = "hero-controls";
+    controls.setAttribute("aria-label", "Controles de portada");
+
+    function createButton(text, label) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.textContent = text;
+        button.setAttribute("aria-label", label);
+
+        return button;
+    }
+
+    const previous = createButton("❮", "Fotografía anterior");
+    const next = createButton("❯", "Fotografía siguiente");
+    const pause = createButton("Ⅱ", "Pausar carrusel");
+
+    controls.append(previous);
+
+    // 05. Crear los indicadores
+
+    const dots = slides.map(function (_, index) {
+
+        const dot = createButton(
+            "",
+            "Mostrar fotografía " + (index + 1)
+        );
+
+        dot.className = "hero-dot";
+
+        dot.addEventListener("click", function () {
+            showSlide(index);
+            restartTimer();
+        });
+
+        controls.append(dot);
+
+        return dot;
+
+    });
+
+    controls.append(next, pause);
+    hero.append(controls);
+
+    // 06. Actualizar los indicadores
+
+    function updateDots() {
+
+        dots.forEach(function (dot, index) {
+
+            const active = index === currentIndex;
+
+            dot.classList.toggle("active", active);
+            dot.setAttribute(
+                "aria-pressed",
+                String(active)
+            );
+
+        });
+    }
+
+    // 07. Mostrar una fotografía
+
+    function showSlide(index) {
+
+        const target =
+            (index + slides.length) % slides.length;
+
+        const selected = slides[target];
+        const request = ++requestNumber;
+
+        // Precargar antes de mostrar para evitar
+        // que aparezcan espacios vacíos.
+
+        const preload = new Image();
+
+        preload.onload = function () {
+
+            if (request !== requestNumber) return;
+
+            heroImage.style.opacity = "0";
+
+            setTimeout(function () {
+
+                if (request !== requestNumber) return;
+
+                heroImage.src = selected.src;
+                heroImage.alt = selected.alt;
+                heroImage.style.opacity = "1";
+
+                currentIndex = target;
+                updateDots();
+
+            }, reducedMotion ? 0 : 400);
+
+        };
+
+        // Conservar la imagen actual si ocurre un error.
+
+        preload.onerror = function () {
+            if (request === requestNumber) {
+                heroImage.style.opacity = "1";
+            }
+        };
+
+        preload.src = selected.src;
+    }
+
+    // 08. Controlar el temporizador
+
+    function stopTimer() {
+
+        clearInterval(timer);
+        timer = null;
+
+    }
+
+    function restartTimer() {
+
+        stopTimer();
+
+        if (paused || document.hidden) return;
+
+        if (!hero.getClientRects().length) return;
+
+        timer = setInterval(function () {
+
+            if (hero.getClientRects().length) {
+                showSlide(currentIndex + 1);
+            }
+
+        }, interval);
+    }
+
+    // 09. Flecha anterior
+
+    previous.addEventListener("click", function () {
+
+        showSlide(currentIndex - 1);
+        restartTimer();
+
+    });
+
+    // 10. Flecha siguiente
+
+    next.addEventListener("click", function () {
+
+        showSlide(currentIndex + 1);
+        restartTimer();
+
+    });
+
+    // 11. Botón de pausa y reproducción
+
+    function updatePauseButton() {
+
+        pause.textContent = paused ? "▶" : "Ⅱ";
+
+        pause.setAttribute(
+            "aria-label",
+            paused ? "Reanudar carrusel" : "Pausar carrusel"
+        );
+    }
+
+    pause.addEventListener("click", function () {
+
+        paused = !paused;
+        updatePauseButton();
+        restartTimer();
+
+    });
+
+    // 12. Detener cuando se abandona la página
+    // o cuando la pestaña deja de estar visible.
+
+    document.addEventListener(
+        "visibilitychange",
+        restartTimer
+    );
+
+    window.addEventListener("hashchange", function () {
+
+        requestAnimationFrame(restartTimer);
+
+    });
+
+    // 13. Iniciar el carrusel
+
+    updateDots();
+    updatePauseButton();
+    restartTimer();
+
+})();
+
+/* FIN DEL CARRUSEL DE PORTADA */
+
 
 
