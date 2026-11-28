@@ -1881,6 +1881,279 @@ button:disabled {
 }
 
 
+/* =====================================================
+   SDZO SYSTEM 2.1
+   ETAPA 01: NUEVA IDENTIDAD VISUAL
+   Fondo degradado, tarjetas y portada
+   ===================================================== */
+
+/* 01. Colores configurables del nuevo diseño */
+
+:root {
+    --fondo-superior: #020d08;
+    --fondo-intermedio: #639b7d;
+    --fondo-inferior: #f5f8f6;
+    --verde-corporativo: #087b4c;
+    --verde-neon: #00ff99;
+    --texto-oscuro: #17352b;
+    --tarjeta-clara: #ffffff;
+    --borde-claro: #d4e5db;
+}
+
+/* 02. Fondo general */
+
+body {
+    background: var(--fondo-inferior);
+}
+
+/* Degradado de arriba hacia abajo.
+   Podemos variar posteriormente los colores
+   y porcentajes desde este apartado. */
+
+body::before {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        var(--fondo-superior) 0%,
+        var(--fondo-superior) 18%,
+        var(--fondo-intermedio) 58%,
+        var(--fondo-inferior) 100%
+    );
+    animation: none;
+    opacity: 1;
+    z-index: -2;
+}
+
+/* Eliminar la antigua capa oscura */
+
+body::after {
+    background: transparent;
+    pointer-events: none;
+}
+
+/* 03. Conservar la lluvia Matrix original */
+
+#matrix {
+    z-index: -1;
+    mix-blend-mode: screen;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+/* 04. Conservar el menú lateral oscuro */
+
+.sidebar {
+    background: #030d08;
+    border-right: 1px solid #00ff9960;
+    box-shadow: 3px 0 18px #00ff9915;
+}
+
+/* 05. Portada con resplandor verde */
+
+.hero {
+    border: 1px solid #00ff99;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+        0 0 12px #00ff9940,
+        0 0 28px #00ff9920;
+}
+
+/* Mantener las letras encima de la fotografía */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+}
+
+.hero-content p {
+    color: #e0eee6;
+}
+
+.hero img {
+    object-fit: cover;
+}
+
+/* 06. Área de servicios */
+
+.services-section {
+    margin-top: 25px;
+    padding: 25px;
+    background: rgba(245, 250, 247, 0.94);
+    border: 1px solid var(--borde-claro);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px #002c1915;
+}
+
+.services-section h2 {
+    color: var(--texto-oscuro);
+    text-shadow: none;
+}
+
+.section-description {
+    color: #486458;
+}
+
+/* 07. Tarjetas blancas profesionales */
+
+.service-card {
+    background: var(--tarjeta-clara);
+    color: var(--texto-oscuro);
+    border: 1px solid var(--borde-claro);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px #003b2015;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--verde-corporativo);
+    box-shadow: 0 8px 22px #00875e35;
+}
+
+.service-card h3 {
+    color: var(--texto-oscuro);
+}
+
+.service-card p {
+    color: #51685c;
+}
+
+.service-content span {
+    color: var(--verde-corporativo);
+    font-weight: bold;
+}
+
+/* 08. Fichas individuales de servicios */
+
+.service-detail {
+    background: #ffffff;
+    color: var(--texto-oscuro);
+    border: 1px solid var(--borde-claro);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px #003b2015;
+}
+
+.service-detail h2,
+.service-detail h3 {
+    color: var(--verde-corporativo);
+    text-shadow: none;
+}
+
+.service-detail p,
+.service-detail li {
+    color: #354b40;
+}
+
+.service-detail > a:not(.btn-primary) {
+    color: var(--verde-corporativo);
+}
+
+/* 09. Perfil y portafolio */
+
+.profile-panel,
+.project-card,
+.contact-panel {
+    background: #ffffff;
+    color: var(--texto-oscuro);
+    border: 1px solid var(--borde-claro);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px #003b2015;
+}
+
+.profile-panel h2,
+.profile-panel h3,
+.project-card h3,
+.contact-panel h2 {
+    color: var(--texto-oscuro);
+    text-shadow: none;
+}
+
+.profile-panel p,
+.project-card p,
+.contact-panel p {
+    color: #405b4d;
+}
+
+.profile-panel span,
+.project-card span,
+.project-card small {
+    color: var(--verde-corporativo);
+}
+
+.skills span {
+    background: #e7f4ed;
+    border: 1px solid #bcdccc;
+    color: #086640;
+}
+
+#proyectos > h2 {
+    background: #f5faf7;
+    color: var(--texto-oscuro);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* 10. Cyber News conserva su identidad oscura */
+
+.news {
+    background: #091710;
+    color: #e2f0e8;
+    border: 1px solid #00ff9960;
+    border-radius: 14px;
+}
+
+/* 11. Pie de página */
+
+.footer {
+    margin-top: 30px;
+    padding: 20px;
+    background: #071710;
+    color: #d5e7dc;
+    border: 1px solid #00ff9940;
+    border-radius: 12px;
+}
+
+.footer a {
+    color: var(--verde-neon);
+}
+
+/* 12. Adaptación para teléfonos móviles */
+
+@media (max-width: 680px) {
+
+    .services-section {
+        padding: 14px;
+        margin-top: 18px;
+    }
+
+    .hero {
+        border-radius: 12px;
+    }
+
+    .service-detail,
+    .profile-panel,
+    .contact-panel {
+        padding: 20px;
+    }
+
+    .mobile-menu {
+        background: #06170e;
+        color: #00ff99;
+        border: 1px solid #00ff9960;
+    }
+}
+
+/* FIN DE LA ETAPA 01 */
+
+
+
 /* =========================================
    FIN DE STYLE.CSS
    SDZO SYSTEM 2.0
